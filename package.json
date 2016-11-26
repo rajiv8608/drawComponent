@@ -1,0 +1,23 @@
+{
+  "name": "ng-canvas",
+  "description": "AngularJS Canvas Utilitiy",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WrathOfZombies/ng-canvas.git"
+  },
+  "engines": {
+    "node": "6.3.0"
+  },
+  "scripts": {
+    "tsc": "tsc -p tsconfig.json && rimraf ./dist/**/*.spec.*",
+    "lint": "tslint -c ./tslint.json ./src/**/*.ts",
+    "postinstall": "typings install"
+  },
+  "license": "MIT",
+  "author": "Bhargav Krishna",
+  "bugs": {
+    "url": "https://github.com/WrathOfZombies/ng-canvas/issues"
+  },
+  "homepage": "https://github.com/WrathOfZombies/ng-canvas#readme"
+}
