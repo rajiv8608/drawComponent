@@ -1,8 +1,8 @@
-# NG Canvas
+# Draw
 
-[![Build Status](https://travis-ci.org/WrathOfZombies/ng-canvas.svg?branch=master)](https://travis-ci.org/WrathOfZombies/ng-canvas)
-[![npm version](https://badge.fury.io/js/%40microsoft%2Fng-canvas.svg)](https://badge.fury.io/js/%40microsoft%2Fng-canvas)
-[![dependencies](https://david-dm.org/WrathOfZombies/ng-canvas.svg)](https://david-dm.org/WrathOfZombies/ng-canvas)
+[![Build Status](https://travis-ci.org/WrathOfZombies/draw.svg?branch=master)](https://travis-ci.org/WrathOfZombies/draw)
+[![npm version](https://badge.fury.io/js/%40microsoft%2Fdraw.svg)](https://badge.fury.io/js/%40microsoft%2Fdraw)
+[![dependencies](https://david-dm.org/WrathOfZombies/draw.svg)](https://david-dm.org/WrathOfZombies/draw)
 
 NG Canvas is a simple canvas drawing utility for AngularJS 1.x.
 
@@ -15,17 +15,17 @@ NG Canvas is a simple canvas drawing utility for AngularJS 1.x.
 
 To install the stable version:
 
-`npm install --save @wrathofzombies/ng-canvas`
+`npm install --save @wrathofzombies/draw`
 
 #### Production
 
-You can access [these files on unpkg](https://unpkg.com/@wrathofzombies/ng-canvas/dist/ng.canvas.min.js), download them, or point your package manager to them.
+You can access [these files on unpkg](https://unpkg.com/@wrathofzombies/draw/dist/draw.min.js), download them, or point your package manager to them.
 
-You can also get the latest version from the [releases](https://github.com/WrathOfZombies/ng-canvas/releases) tab.
+You can also get the latest version from the [releases](https://github.com/WrathOfZombies/draw/releases) tab.
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/WrathOfZombies/ng-canvas/tags).
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/WrathOfZombies/draw/tags).
 
 ## License
 
