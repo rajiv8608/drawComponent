@@ -1,5 +1,9 @@
 {
   "name": "ng-canvas",
   "dependencies": {},
-  "globalDependencies": {}
+  "globalDependencies": {
+    "angular": "registry:dt/angular#1.5.0+20161101124950",
+    "fabricjs": "registry:dt/fabricjs#1.5.0+20160908062918",
+    "paper": "registry:dt/paper#0.9.22+20160818095803"
+  }
 }

@@ -19,5 +19,10 @@
   "bugs": {
     "url": "https://github.com/WrathOfZombies/ng-canvas/issues"
   },
-  "homepage": "https://github.com/WrathOfZombies/ng-canvas#readme"
+  "homepage": "https://github.com/WrathOfZombies/ng-canvas#readme",
+  "devDependencies": {
+    "angular": "^1.5.9",
+    "paper": "^0.10.2",
+    "fabric": "^1.7.0"
+  }
 }
