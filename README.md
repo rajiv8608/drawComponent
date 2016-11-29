@@ -4,7 +4,7 @@
 [![npm version](https://badge.fury.io/js/%40microsoft%2Fdraw.svg)](https://badge.fury.io/js/%40microsoft%2Fdraw)
 [![dependencies](https://david-dm.org/WrathOfZombies/draw.svg)](https://david-dm.org/WrathOfZombies/draw)
 
-NG Canvas is a simple canvas drawing utility for AngularJS 1.x.
+Draw is a simple canvas drawing utility for JavaScript. Its built on top of fabric-js.
 
 ## Getting Started
 

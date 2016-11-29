@@ -11,7 +11,7 @@ module.exports = {
     },
 
     resolve: {
-        extensions: ['', '.js', '.ts', '.css', '.html']
+        extensions: ['', '.js', '.ts', '.css', '.scss', '.html']
     },
 
     module: {
@@ -22,8 +22,8 @@ module.exports = {
                 exclude: /node_modules/
             },
             {
-                test: /\.css$/,
-                loader: ExtractTextPlugin.extract('css!postcss'),
+                test: /\.scss$/,
+                loader: ExtractTextPlugin.extract('css!postcss!sass'),
                 exclude: /node_modules/
             }
         ]
@@ -34,6 +34,11 @@ module.exports = {
     },
 
     plugins: [
+        new webpack.ProvidePlugin({
+            $: "jquery",
+            jQuery: "jquery",
+            "window.jQuery": "jquery"
+        }),
         new webpack.optimize.CommonsChunkPlugin({
             name: ['draw', 'app'].reverse()
         })
