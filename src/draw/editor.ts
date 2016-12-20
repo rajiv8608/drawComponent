@@ -1,8 +1,8 @@
+import { createStore, Store } from 'redux';
 import { debounce } from 'lodash';
 import * as $ from 'jquery';
 import * as _fabric from 'fabric';
-import { DrawError } from './error';
-import { IAction, DEFAULT_ACTIONS } from './actions';
+import { Tools, Drawing, DrawError, IDrawState, reducer } from './core';
 import './styles/draw.scss';
 
 // Minor hack to fix fabric export.
@@ -15,7 +15,7 @@ let editorTemplate = `
 
 let actionTemplate = `
     <artice class="draw__tool" id="{{id}}" title="{{name}}">
-        <i class="ms-Icon {{icon}}"></i>
+        <i class="ms-Icon ms-Icon--{{icon}}"></i>
     </artice>
 `;
 
@@ -28,6 +28,8 @@ export class Draw {
     private _toolbox$: JQuery;
     private _actions$: JQuery[];
     private _canvas: fabric.ICanvas;
+    private _state: IDrawState;
+    private _store: Store<IDrawState>;
 
     constructor(
         private _container$: JQuery,
@@ -41,6 +43,11 @@ export class Draw {
         }
         this._setup();
         this._loadActions();
+
+        this._store = createStore<IDrawState>(reducer);
+        this._store.subscribe(() => {
+            this._state = this._store.getState();
+        });
     }
 
     public rescale(options: IDrawConstructionOptions) {
@@ -62,14 +69,14 @@ export class Draw {
     }
 
     private _loadActions() {
-        this._actions$ = DEFAULT_ACTIONS.map(item => {
+        this._actions$ = Tools.DEFAULT_TOOLS.map(item => {
             let template = actionTemplate.replace('{{id}}', item.id);
             template = template.replace('{{name}}', item.name);
             template = template.replace('{{icon}}', item.icon);
 
             let action = $(template);
             this._toolbox$.append(action);
-            action.click(e => item.action(this._canvas, e));
+            action.click(e => this._store.dispatch(new Drawing.SwitchToolAction()));
             return action;
         });
     }

@@ -1,3 +1,2 @@
 export * from './editor';
-export * from './error';
-export * from './actions';
+export * from './core';
