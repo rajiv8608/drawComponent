@@ -8,7 +8,14 @@ const circleDefaults: fabric.ICircleOptions = {
 };
 
 export const Circle: Tool = {
-    id: 'tool__rectangle',
+    id: 'tool__circle',
     name: 'Draw Circle',
     icon: 'CircleRing'
+};
+
+export const drawCircle = (options: fabric.ICircleOptions): fabric.ICircle => {
+    return new fabric.Circle({
+        ...circleDefaults,
+        ...options
+    });
 };

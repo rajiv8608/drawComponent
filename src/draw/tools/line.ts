@@ -15,3 +15,10 @@ export const Line: Tool = {
     name: 'Draw Line',
     icon: 'CalculatorSubtract'
 };
+
+export const drawLine = (options: fabric.ILineOptions): fabric.IRect => {
+    return new fabric.Line([0, 0, 10, 10], {
+        ...lineDefaults,
+        ...options
+    });
+};

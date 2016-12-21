@@ -37,6 +37,7 @@ export interface IDrawConstructionOptions {
 export class Draw {
     private _toolbox$: JQuery;
     private _properties$: JQuery;
+    private _properties: any[] = [];
     private _tools$: JQuery[];
     private _state: IDrawState;
     private _store: Store<IDrawState>;
@@ -133,12 +134,12 @@ export class Draw {
         }
     }
 
-    private _render() {
+    private _render = debounce(() => {
         this._state = this._store.getState();
         if (this._state && this._state.isInitialzed) {
             this._renderProperties(this._state.currentObject);
         }
-    }
+    }, 200);
 
     private _renderProperties(obj) {
         if (this._properties$ == null) {
@@ -146,15 +147,28 @@ export class Draw {
         }
 
         if (obj) {
+            this._properties.forEach(item => {
+                item.off('change');
+            });
+
             this._properties$.html('');
+
             let serialize = JSON.stringify(obj);
             let properties = JSON.parse(serialize);
-            $.each(properties, (name, value) => {
+
+            this._properties = $.map(properties, (value, name) => {
                 let template = propertyTemplate.replace('{{name}}', name);
                 template = template.replace('{{value}}', value);
 
                 let property = $(template);
                 this._properties$.append(property);
+                let input = property.children('input');
+                input.change(() => {
+                    let value = input.val();
+                    this._store.dispatch({ type: 'PROPERTY_UPDATED', name, value });
+                });
+
+                return input;
             });
 
             this._properties$.show();

@@ -61,6 +61,15 @@ export const reducer: Reducer<IDrawState> = (state: IDrawState = initialState, a
             return { ...state, currentObject };
         }
 
+        case 'PROPERTY_UPDATED': {
+            let {name, value} = action;
+            if (name && value) {
+                console.log(`updating ${name}:${value}`);
+                state.currentObject.set(name, value);
+            }
+            return state;
+        }
+
         case 'INIT': {
             let {canvas$} = action;
             let isInitialzed = initialize(canvas$[0]);
@@ -93,3 +102,15 @@ export const reducer: Reducer<IDrawState> = (state: IDrawState = initialState, a
     }
 };
 
+
+(window as any).export = () => {
+    let source = canvas.toSVG(null);
+    let blob = new Blob([source], { type: 'image/svg+xml;charset=utf-8' });
+    let svgUrl = URL.createObjectURL(blob);
+    let downloadLink = document.createElement('a');
+    downloadLink.href = svgUrl;
+    downloadLink.download = 'newesttree.svg';
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+};
