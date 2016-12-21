@@ -1,75 +1,91 @@
+import { createStore, Store } from 'redux';
 import { debounce } from 'lodash';
 import * as $ from 'jquery';
-import * as fabric from 'fabric';
-import { IDrawConstructionOptions } from './interfaces';
-import { DrawError } from './error';
+import * as _fabric from 'fabric';
+import { Tools, DrawError, IDrawState, reducer } from './core';
 import './styles/draw.scss';
 
-let template = `
+// Minor hack to fix fabric export.
+const fabric: typeof _fabric = (_fabric as any).fabric;
+
+let editorTemplate = `
     <canvas class="draw__canvas"></canvas>
-    <section class="draw__toolbox">
-        <artice class="draw__tool">
-            <i class="ms-Icon ms-Icon--CircleRing"></i>
-        </artice>
-        <artice class="draw__tool">
-            <i class="ms-Icon ms-Icon--TriangleUp12"></i>
-        </artice>
-        <artice class="draw__tool">
-            <i class="ms-Icon ms-Icon--EditMirrored"></i>
-        </artice>
-        <artice class="draw__tool">
-            <i class="ms-Icon ms-Icon--Photo2Add"></i>
-        </artice>
-        <artice class="draw__tool">
-            <i class="ms-Icon ms-Icon--CSS"></i>
-        </artice>
-        <artice class="draw__tool">
-            <i class="ms-Icon ms-Icon--Checkbox"></i>
-        </artice>
-        <artice class="draw__tool">
-            <i class="ms-Icon ms-Icon--ArrowUpRight8"></i>
-        </artice>
-        <artice class="draw__tool">
-            <i class="ms-Icon ms-Icon--InsertTextBox"></i>
-        </artice>
-        <artice class="draw__tool">
-            <i class="ms-Icon ms-Icon--FullScreen"></i>
-        </artice>
-    </section>
+    <section class="draw__toolbox"></section>
 `;
 
+let actionTemplate = `
+    <artice class="draw__tool" id="{{id}}" title="{{name}}">
+        <i class="ms-Icon ms-Icon--{{icon}}"></i>
+    </artice>
+`;
+
+export interface IDrawConstructionOptions {
+    width: number,
+    height: number
+}
+
 export class Draw {
-    private _canvas: JQuery;
-    private _toolbox: JQuery;
+    private _toolbox$: JQuery;
+    private _tools$: JQuery[];
+    private _canvas: fabric.ICanvas;
+    private _state: IDrawState;
+    private _store: Store<IDrawState>;
 
     constructor(
-        private container: JQuery,
-        private options: IDrawConstructionOptions
+        private _container$: JQuery,
+        private _size: IDrawConstructionOptions
     ) {
-        if (this.container == null) {
+        if (this._container$ == null) {
             throw new DrawError('Canvas element cannot be null or undefined', 'Configuration');
         }
-        if (this.options == null) {
+        if (this._size == null) {
             throw new DrawError('Options element cannot be null or undefined', 'Configuration');
         }
-        this.options.aspectRatio = ~~(this.options.width / this.options.height);
         this._setup();
+        this._loadActions();
+
+        this._store = createStore<IDrawState>(reducer);
+        this._store.subscribe(() => {
+            this._state = this._store.getState();
+        });
     }
 
-    private _scale() {
-        console.log('resize');
+    public rescale(options: IDrawConstructionOptions) {
+        let { width, height } = options;
+        this._size = options;
+        this._container$.width(width + 40);
+        this._container$.height(height);
+        this._canvas.setWidth(width);
+        this._canvas.setHeight(height);
     }
 
     private _setup() {
-        this.container.html(template);
-        this._canvas = this.container.children('.draw_canvas');
-        this._toolbox = this.container.children('.draw_toolbox');
-        this.container.resize(debounce(() => this._scale(), 250));
-        this.container.width(this.options.width);
-        this.container.height(this.options.height);
+        this._container$.html(editorTemplate);
+        let canvas$ = this._container$.children('.draw__canvas');
+        this._canvas = new fabric.Canvas(canvas$[0] as HTMLCanvasElement);
+        this._toolbox$ = this._container$.children('.draw__toolbox');
+        this._container$.resize(debounce(() => this.rescale(this._size), 250));
+        this.rescale(this._size);
+    }
+
+    private _loadActions() {
+        this._tools$ = Tools.DEFAULT_TOOLS.map(tool => {
+            let template = actionTemplate.replace('{{id}}', tool.id);
+            template = template.replace('{{name}}', tool.name);
+            template = template.replace('{{icon}}', tool.icon);
+
+            let action = $(template);
+            this._toolbox$.append(action);
+            action.click(e => this._store.dispatch({
+                type: 'SELECT_TOOL',
+                payload: tool
+            }));
+            return action;
+        });
     }
 
     dispose() {
-        this.container.off('resize');
+        this._container$.off('resize');
+        this._tools$.forEach(action => action.off('click'));
     }
 }
