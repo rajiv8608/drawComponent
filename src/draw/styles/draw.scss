@@ -6,7 +6,8 @@
         width: 640px;
         display: flex;
         flex-wrap: nowrap;
-        box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.3);
+        position: relative;
+        border: solid 1px #333;
     }
 
     &__canvas {
@@ -21,6 +22,24 @@
         display: flex;
         flex-direction: column;
         flex-wrap: nowrap;
+    }
+
+    &__properties {
+        position: absolute;
+        right: -330px;
+        top: -1px;
+        width: 300px;
+        background-color: #333;
+        color: #F2F2F2;
+        border: solid 1px #333;
+        padding: 15px;
+        @include vScroll();
+        height: calc(100% - 30px);
+
+        .ms-Label {
+            text-transform: uppercase;
+            color: #F2F2F2;
+        }
     }
 
     &__tool {
