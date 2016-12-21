@@ -8,7 +8,7 @@ class AppController implements angular.IComponentController {
     constructor() {
         this.title = 'Draw Demo';
         let canvas = new Draw($('#canvas'), {
-            width: 600,
+            width: 920,
             height: 500
         });
     }
