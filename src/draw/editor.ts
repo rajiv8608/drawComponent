@@ -2,7 +2,7 @@ import { createStore, Store } from 'redux';
 import { debounce } from 'lodash';
 import * as $ from 'jquery';
 import * as _fabric from 'fabric';
-import { Tools, Drawing, DrawError, IDrawState, reducer } from './core';
+import { Tools, DrawError, IDrawState, reducer } from './core';
 import './styles/draw.scss';
 
 // Minor hack to fix fabric export.
@@ -26,7 +26,7 @@ export interface IDrawConstructionOptions {
 
 export class Draw {
     private _toolbox$: JQuery;
-    private _actions$: JQuery[];
+    private _tools$: JQuery[];
     private _canvas: fabric.ICanvas;
     private _state: IDrawState;
     private _store: Store<IDrawState>;
@@ -69,20 +69,23 @@ export class Draw {
     }
 
     private _loadActions() {
-        this._actions$ = Tools.DEFAULT_TOOLS.map(item => {
-            let template = actionTemplate.replace('{{id}}', item.id);
-            template = template.replace('{{name}}', item.name);
-            template = template.replace('{{icon}}', item.icon);
+        this._tools$ = Tools.DEFAULT_TOOLS.map(tool => {
+            let template = actionTemplate.replace('{{id}}', tool.id);
+            template = template.replace('{{name}}', tool.name);
+            template = template.replace('{{icon}}', tool.icon);
 
             let action = $(template);
             this._toolbox$.append(action);
-            action.click(e => this._store.dispatch(new Drawing.SwitchToolAction()));
+            action.click(e => this._store.dispatch({
+                type: 'SELECT_TOOL',
+                payload: tool
+            }));
             return action;
         });
     }
 
     dispose() {
         this._container$.off('resize');
-        this._actions$.forEach(action => action.off('click'));
+        this._tools$.forEach(action => action.off('click'));
     }
 }

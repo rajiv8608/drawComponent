@@ -1,5 +1,4 @@
 import { Reducer } from 'redux';
-import { DrawActions, DrawActionTypes } from './actions';
 
 export interface IDrawState {
 
@@ -9,21 +8,22 @@ const initialState: IDrawState = {
 
 };
 
-export const reducer: Reducer<IDrawState> = <DrawActionTypes>(state: IDrawState = initialState, action) => {
+export const reducer: Reducer<IDrawState> = (state: IDrawState = initialState, action) => {
     switch (action.type) {
-        case DrawActions.SHAPE_DRAWN:
+        case 'SELECT_TOOL':
+            console.log(action.payload);
             return;
 
-        case DrawActions.UPDATE_PROPERTIES:
+        case 'UPDATE_PROPERTIES':
             return;
 
-        case DrawActions.SHAPE_DRAWN:
+        case 'SHAPE_DRAWN':
             return;
 
-        case DrawActions.UNDO:
+        case 'UNDO':
             return;
 
-        case DrawActions.REDO:
+        case 'REDO':
             return;
 
         default:
