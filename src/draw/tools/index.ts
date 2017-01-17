@@ -9,6 +9,7 @@ import { Text, drawText, TEXT_PROPS } from './text';
 import { Icon, drawIcon, ICON_PROPS } from './icon';
 import { Image, IMAGE_PROPS } from './image';
 export { Tool };
+import { pick } from 'lodash';
 
 const baseProperties = [
     'top',
@@ -62,7 +63,7 @@ export class DrawToolsService {
         }
     };
 
-    getPropertiesForTool(id: string) {
+    getProperties(object: any, id: string) {
         let additional = [];
         switch (id) {
             case 'tool__rectangle':
@@ -98,6 +99,7 @@ export class DrawToolsService {
                 return;
         }
 
-        return [...baseProperties, ...additional];
+        let props = [...additional, ...baseProperties];
+        return pick(object, props);
     }
 }

@@ -2,7 +2,7 @@ import { Action } from 'redux';
 import { Tool, Color } from '../models';
 
 const circleDefaults: fabric.ICircleOptions = {
-    radius: 20,
+    radius: 60,
     borderColor: 'transparent',
     fill: new Color('#FF4444').hex
 };
@@ -19,7 +19,7 @@ export const CIRCLE_PROPS = [
     'endAngle'
 ];
 
-export const drawCircle = (options: fabric.ICircleOptions): fabric.ICircle => {
+export const drawCircle = (options?: fabric.ICircleOptions): fabric.ICircle => {
     return new fabric.Circle({
         ...circleDefaults,
         ...options

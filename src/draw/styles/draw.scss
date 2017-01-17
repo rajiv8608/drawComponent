@@ -60,6 +60,6 @@
 
 .scroll-container {
     @include vScroll();    
-    height: calc(100% - 85px);
-    margin: 10px 0;
+    height: calc(100% - 45px);
+    margin: 0 0 15px;
 }

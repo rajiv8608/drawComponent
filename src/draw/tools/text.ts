@@ -2,7 +2,7 @@ import { Tool, Color } from '../models';
 
 const textDefaults: fabric.IITextOptions = {
     fontFamily: 'Segoe UI',
-    fontSize: 11
+    fontSize: 16
 };
 
 export const TEXT_PROPS = [
@@ -24,7 +24,7 @@ export const Text: Tool = {
     icon: 'InsertTextBox'
 };
 
-export const drawText = (options: fabric.ITextOptions): fabric.IText => {
+export const drawText = (options?: fabric.ITextOptions): fabric.IText => {
     return new fabric.Text('Text', {
         ...textDefaults,
         ...options

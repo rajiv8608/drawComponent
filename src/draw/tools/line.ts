@@ -4,8 +4,8 @@ import { Tool, Color } from '../models';
 const lineDefaults: fabric.ILineOptions = {
     x1: 0,
     y1: 0,
-    x2: 10,
-    y2: 10,
+    x2: 300,
+    y2: 300,
     borderColor: 'transparent',
     fill: new Color('#FF4444').hex
 };
@@ -23,7 +23,7 @@ export const Line: Tool = {
     icon: 'CalculatorSubtract'
 };
 
-export const drawLine = (options: fabric.ILineOptions): fabric.IRect => {
+export const drawLine = (options?: fabric.ILineOptions): fabric.IRect => {
     return new fabric.Line([0, 0, 10, 10], {
         ...lineDefaults,
         ...options

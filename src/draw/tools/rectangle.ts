@@ -1,8 +1,8 @@
 import { Tool, Color } from '../models';
 
 const rectangleDefaults: fabric.IRectOptions = {
-    width: 30,
-    height: 15,
+    width: 300,
+    height: 100,
     rx: 0,
     ry: 0,
     borderColor: 'transparent',
@@ -22,7 +22,7 @@ export const Rectangle: Tool = {
     icon: 'Checkbox'
 };
 
-export const drawRectangle = (options: fabric.IRectOptions): fabric.IRect => {
+export const drawRectangle = (options?: fabric.IRectOptions): fabric.IRect => {
     return new fabric.Rect({
         ...rectangleDefaults,
         ...options

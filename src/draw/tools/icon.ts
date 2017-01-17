@@ -18,7 +18,7 @@ export const ICON_PROPS = [
     'text'
 ];
 
-export const drawIcon = (options: fabric.ITextOptions): fabric.IText => {
+export const drawIcon = (options?: fabric.ITextOptions): fabric.IText => {
     return new fabric.Text('U+E001', {
         ...textDefaults,
         ...options
