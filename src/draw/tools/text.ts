@@ -5,6 +5,19 @@ const textDefaults: fabric.IITextOptions = {
     fontSize: 11
 };
 
+export const TEXT_PROPS = [
+    'fontSize',
+    'fontWeight',
+    'fontFamily',
+    'textDecoration',
+    'textAlign',
+    'fontStyle',
+    'lineHeight',
+    'shadow',
+    'textBackgroundColor',
+    'text'
+];
+
 export const Text: Tool = {
     id: 'tool__text',
     name: 'Draw Text',

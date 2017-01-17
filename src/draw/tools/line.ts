@@ -10,6 +10,13 @@ const lineDefaults: fabric.ILineOptions = {
     fill: new Color('#FF4444').hex
 };
 
+export const LINE_PROPS = [
+    'x1',
+    'y1',
+    'x2',
+    'y2',
+];
+
 export const Line: Tool = {
     id: 'tool__line',
     name: 'Draw Line',

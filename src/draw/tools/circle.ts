@@ -13,6 +13,12 @@ export const Circle: Tool = {
     icon: 'CircleRing'
 };
 
+export const CIRCLE_PROPS = [
+    'radius',
+    'startAngle',
+    'endAngle'
+];
+
 export const drawCircle = (options: fabric.ICircleOptions): fabric.ICircle => {
     return new fabric.Circle({
         ...circleDefaults,

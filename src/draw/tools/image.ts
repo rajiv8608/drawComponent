@@ -8,6 +8,8 @@ const imageDefaults: fabric.IImageOptions = {
     filters: []
 };
 
+export const IMAGE_PROPS = ['url'];
+
 export const Image: Tool = {
     id: 'tool__image',
     name: 'Draw Image',

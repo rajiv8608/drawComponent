@@ -9,6 +9,13 @@ const rectangleDefaults: fabric.IRectOptions = {
     fill: new Color('#FF4444').hex
 };
 
+export const RECTANGLE_PROPS = [
+    'width',
+    'height',
+    'rx',
+    'ry',
+];
+
 export const Rectangle: Tool = {
     id: 'tool__rectangle',
     name: 'Draw Rectangle',

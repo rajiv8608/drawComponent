@@ -11,8 +11,15 @@ export const Icon: Tool = {
     icon: 'CirclePlus'
 };
 
+export const ICON_PROPS = [
+    'fontSize',
+    'fontWeight',
+    'textBackgroundColor',
+    'text'
+];
+
 export const drawIcon = (options: fabric.ITextOptions): fabric.IText => {
-    return new fabric.Text('U+EB9F', {
+    return new fabric.Text('U+E001', {
         ...textDefaults,
         ...options
     });

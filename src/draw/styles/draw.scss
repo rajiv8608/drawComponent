@@ -32,7 +32,6 @@
         background-color: #F2F2F2;
         border: solid 1px #333;
         padding: 15px;
-        @include vScroll();
         height: calc(100% - 30px);
 
         .ms-Label {
@@ -50,5 +49,17 @@
         font-size: 14pt;
         color: #333;
         @include focus-states(darken(#F2F2F2, 5%), #0078d7);
+
+        &--selected {
+            background-color: #0078d7;
+            color: #F2F2F2;
+            @include focus-states(darken(#0078d7, 5%), #F2F2F2);
+        }
     }
+}
+
+.scroll-container {
+    @include vScroll();    
+    height: calc(100% - 85px);
+    margin: 10px 0;
 }

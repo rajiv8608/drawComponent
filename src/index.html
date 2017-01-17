@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="draw">
+<html ng-app="app">
 
 <head>
     <base href="/">
@@ -15,7 +15,7 @@
 
 <body class="ms-font-m" ng-controller="AppController as app">
     <h1 class="ms-font-xl">{{ app.title }}</h1>
-    <div id="canvas" class="draw__container"></div>
+    <draw width="{{640}}" height="{{480}}"></draw>
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/office-ui-fabric-js/dist/js/fabric.js"></script>
 </body>

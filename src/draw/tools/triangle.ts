@@ -7,6 +7,11 @@ const triangleDefaults: fabric.ITriangleOptions = {
     fill: new Color('#FF4444').hex
 };
 
+export const TRIANGLE_PROPS = [
+    'width',
+    'height'
+];
+
 export const Triangle: Tool = {
     id: 'tool__triangle',
     name: 'Draw Triangle',
