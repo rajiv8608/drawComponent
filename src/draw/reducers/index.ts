@@ -1,4 +1,5 @@
 import * as angular from 'angular';
+import * as fabric from 'fabric';
 import { DrawModule } from '../module';
 import { Tool } from '../models';
 import { DrawToolsService } from '../tools';
@@ -6,9 +7,9 @@ import { forEach } from 'lodash';
 
 export class DrawStateService {
     constructor(private $q: angular.IQService, private _tools: DrawToolsService) { }
-    canvas: fabric.ICanvas = null;
+    canvas: fabric.Canvas = null;
     tool: Tool;
-    current: fabric.IObject;
+    current: fabric.Object;
 
     init(canvas$: HTMLCanvasElement) {
         this.canvas = new fabric.Canvas(canvas$);
@@ -54,7 +55,7 @@ export class DrawStateService {
         this.canvas.setHeight(height);
     }
 
-    load() {
+    loadFabricSVG() {
         let deferred = this.$q.defer();
         if (this.canvas) {
             let url = window.prompt('URL', 'Enter the editor svg url');

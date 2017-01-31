@@ -1,3 +1,4 @@
+import * as fabric from 'fabric';
 import { Tool, Color } from '../models';
 
 const rectangleDefaults: fabric.IRectOptions = {
@@ -22,7 +23,7 @@ export const Rectangle: Tool = {
     icon: 'Checkbox'
 };
 
-export const drawRectangle = (options?: fabric.IRectOptions): fabric.IRect => {
+export const drawRectangle = (options?: fabric.IRectOptions): fabric.Rect => {
     return new fabric.Rect({
         ...rectangleDefaults,
         ...options

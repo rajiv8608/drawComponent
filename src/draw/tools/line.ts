@@ -1,4 +1,4 @@
-import { Action } from 'redux';
+import * as fabric from 'fabric';
 import { Tool, Color } from '../models';
 
 const lineDefaults: fabric.ILineOptions = {
@@ -23,7 +23,7 @@ export const Line: Tool = {
     icon: 'CalculatorSubtract'
 };
 
-export const drawLine = (options?: fabric.ILineOptions): fabric.IRect => {
+export const drawLine = (options?: fabric.ILineOptions): fabric.Rect => {
     return new fabric.Line([0, 0, 10, 10], {
         ...lineDefaults,
         ...options

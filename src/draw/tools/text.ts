@@ -1,3 +1,4 @@
+import * as fabric from 'fabric';
 import { Tool, Color } from '../models';
 
 const textDefaults: fabric.IITextOptions = {
@@ -24,7 +25,7 @@ export const Text: Tool = {
     icon: 'InsertTextBox'
 };
 
-export const drawText = (options?: fabric.ITextOptions): fabric.IText => {
+export const drawText = (options?: fabric.ITextOptions): fabric.Text => {
     return new fabric.Text('Text', {
         ...textDefaults,
         ...options

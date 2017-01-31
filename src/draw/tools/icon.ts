@@ -1,3 +1,4 @@
+import * as fabric from 'fabric';
 import { Tool, Color } from '../models';
 
 const textDefaults: fabric.ITextOptions = {
@@ -18,7 +19,7 @@ export const ICON_PROPS = [
     'text'
 ];
 
-export const drawIcon = (options?: fabric.ITextOptions): fabric.IText => {
+export const drawIcon = (options?: fabric.ITextOptions): fabric.Text => {
     return new fabric.Text('', {
         ...textDefaults,
         ...options

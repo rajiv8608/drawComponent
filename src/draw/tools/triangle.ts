@@ -1,3 +1,4 @@
+import * as fabric from 'fabric';
 import { Tool, Color } from '../models';
 
 const triangleDefaults: fabric.ITriangleOptions = {
@@ -18,7 +19,7 @@ export const Triangle: Tool = {
     icon: 'TriangleUp12'
 };
 
-export const drawTriangle = (options?: fabric.ITriangleOptions): fabric.ITriangle => {
+export const drawTriangle = (options?: fabric.ITriangleOptions): fabric.Triangle => {
     return new fabric.Triangle({
         ...triangleDefaults,
         ...options

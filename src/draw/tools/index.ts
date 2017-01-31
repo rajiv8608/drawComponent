@@ -4,7 +4,6 @@ import { Circle, drawCircle, CIRCLE_PROPS } from './circle';
 import { Triangle, drawTriangle, TRIANGLE_PROPS } from './triangle';
 import { Rectangle, drawRectangle, RECTANGLE_PROPS } from './rectangle';
 import { Line, drawLine, LINE_PROPS } from './line';
-import { Polyline, drawPolyline } from './polyline';
 import { Text, drawText, TEXT_PROPS } from './text';
 import { Icon, drawIcon, ICON_PROPS } from './icon';
 import { Image, IMAGE_PROPS } from './image';

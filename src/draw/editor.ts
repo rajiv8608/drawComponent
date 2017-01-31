@@ -1,15 +1,11 @@
 import * as angular from 'angular';
+import * as $ from 'jquery';
 import { DrawModule } from './module';
 import { DrawError } from './core';
 import { DrawStateService } from './reducers';
 import { DrawToolsService, Tool } from './tools';
 import { debounce } from 'lodash';
-import * as $ from 'jquery';
-import * as _fabric from 'fabric';
 import './styles/draw.scss';
-
-// Minor hack to fix fabric export.
-const fabric: typeof _fabric = (_fabric as any).fabric;
 
 export class DrawController {
     tools: Tool[];
@@ -51,7 +47,7 @@ export class DrawController {
     async draw(tool: Tool) {
         switch (tool.id) {
             case 'tool__save': return this.state.save();
-            case 'tool__load': return this.state.load();
+            case 'tool__load': return this.state.loadFabricSVG();
             case 'tool__arrow': {
                 let rectangle = this.state.add(this.tools.find(tool => tool.id === 'tool__rectangle'), { height: 2, width: 300, fill: '#000000', top: (this.height) / 2, left: (this.width - 300) / 2 });
                 let triangle = this.state.add(this.tools.find(tool => tool.id === 'tool__triangle'), { height: 20, width: 20, fill: '#000000', angle: -90, top: (this.height) / 2, left: (this.width - 300) / 2 });

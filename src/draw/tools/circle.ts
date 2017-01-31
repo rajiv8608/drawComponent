@@ -1,4 +1,4 @@
-import { Action } from 'redux';
+import * as fabric from 'fabric';
 import { Tool, Color } from '../models';
 
 const circleDefaults: fabric.ICircleOptions = {
@@ -19,7 +19,7 @@ export const CIRCLE_PROPS = [
     'endAngle'
 ];
 
-export const drawCircle = (options?: fabric.ICircleOptions): fabric.ICircle => {
+export const drawCircle = (options?: fabric.ICircleOptions): fabric.Circle => {
     return new fabric.Circle({
         ...circleDefaults,
         ...options
