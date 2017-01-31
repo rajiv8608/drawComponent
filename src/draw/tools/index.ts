@@ -69,13 +69,11 @@ export class DrawToolsService {
             case 'tool__icon':
                 return drawIcon;
 
-<<<<<<< HEAD
             case 'tool__arrow':
                 return drawArrow;
-=======
+
             case 'tool__image':
                 return drawImage;
->>>>>>> 41ca9f4c70cf693b1eb9f3b61442c5f894de9004
 
             default:
                 return;
