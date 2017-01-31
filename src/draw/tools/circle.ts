@@ -1,5 +1,6 @@
-import * as fabric from 'fabric';
+import * as _fabric from 'fabric';
 import { Tool, Color } from '../models';
+let fabric = (_fabric as any).fabric as typeof _fabric;
 
 const circleDefaults: fabric.ICircleOptions = {
     radius: 60,

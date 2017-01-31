@@ -1,5 +1,7 @@
 import * as angular from 'angular';
-import * as fabric from 'fabric';
+import * as _fabric from 'fabric';
+let fabric = (_fabric as any).fabric as typeof _fabric;
+
 import { DrawModule } from '../module';
 import { Tool } from '../models';
 import { DrawToolsService } from '../tools';
