@@ -11,8 +11,7 @@
   },
   "scripts": {
     "start": "webpack-dev-server --config config/webpack.dev.js --progress",
-    "build": "rimraf dist && webpack --config config/webpack.prod.js --progress --profile --bail",
-    "postinstall": "typings install"
+    "build": "rimraf dist && webpack --config config/webpack.prod.js --progress --profile --bail"
   },
   "license": "MIT",
   "author": "Bhargav Krishna",
@@ -35,7 +34,11 @@
     "webpack-merge": "^0.15.0",
     "webpack": "^1.13.3",
     "tslint": "^3.15.1",
-    "node-sass": "^3.13.0"
+    "node-sass": "^3.13.0",
+    "@types/angular": "^1.6.3",
+    "@types/lodash": "^4.14.52",
+    "@types/fabric": "^1.5.20",
+    "@types/jquery": "^2.0.40"
   },
   "dependencies": {
     "angular": "^1.5.9",
