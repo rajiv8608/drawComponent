@@ -8,7 +8,7 @@ import { Text, drawText, TEXT_PROPS } from './text';
 import { Icon, drawIcon, ICON_PROPS } from './icon';
 import { Image, IMAGE_PROPS } from './image';
 export { Tool };
-import { pick } from 'lodash';
+import pick = require('lodash/pick');
 
 const baseProperties = [
     'top',

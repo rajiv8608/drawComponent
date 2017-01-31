@@ -4,7 +4,7 @@ import { DrawModule } from './module';
 import { DrawError } from './core';
 import { DrawStateService } from './reducers';
 import { DrawToolsService, Tool } from './tools';
-import { debounce } from 'lodash';
+import debounce = require('lodash/debounce');
 import './styles/draw.scss';
 
 export class DrawController {
@@ -38,11 +38,11 @@ export class DrawController {
         }));
     }
 
-    rescale(container) {
-        let width = (+this.width) || window.outerWidth;
-        let height = (+this.height) || window.outerHeight;
-        container.width(width + 40);
-        container.height(height);
+    rescale(container: JQuery, width: number, height: number) {
+        this.width = width;
+        this.height = height;
+        container.width(width - 2 /* borders */);
+        container.height(height - 1 /* borders */);
         this.state.rescale(width, height);
     };
 

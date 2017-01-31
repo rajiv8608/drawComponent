@@ -5,7 +5,7 @@ let fabric = (_fabric as any).fabric as typeof _fabric;
 import { DrawModule } from '../module';
 import { Tool } from '../models';
 import { DrawToolsService } from '../tools';
-import { forEach } from 'lodash';
+import forEach = require('lodash/forEach');
 
 export class DrawStateService {
     constructor(private $q: angular.IQService, private _tools: DrawToolsService) { }
@@ -41,10 +41,11 @@ export class DrawStateService {
 
     update(props: any, tool: string) {
         this.current = this.canvas.getActiveObject();
-        forEach(props, (value, name) => {
+        forEach(props as {}, (value, name) => {
             console.log(`updating ${name}:${value}`);
             this.current.set(name, value);
         });
+
         this.current.set(name, tool);
     }
 
@@ -53,8 +54,8 @@ export class DrawStateService {
     }
 
     rescale(width, height) {
-        this.canvas.setWidth(width);
-        this.canvas.setHeight(height);
+        this.canvas.setWidth(width - 373 /* container - tools - properties - borders */);
+        this.canvas.setHeight(height - 1 /* borders */);
     }
 
     loadFabricSVG() {

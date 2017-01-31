@@ -1,5 +1,13 @@
 @import 'mixins.scss';
 
+html, 
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;    
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -7,37 +15,32 @@ body {
 
 .draw {
     &__container {
-        height: 480px;
-        width: 640px;
         display: flex;
         flex-wrap: nowrap;
-        position: relative;
         border: solid 1px #333;
-    }
-
-    &__canvas {
-        height: 100%;
-        flex: 1 1;
-    }
+        overflow: hidden;
+    
+        .canvas-container {
+            overflow: hidden !important;
+        }
+    }    
 
     &__toolbox {
         height: 100%;
-        width: 40px;
         background-color: #F2F2F2;
+        border-left: solid 1px #333;        
         display: flex;
         flex-direction: column;
         flex-wrap: nowrap;
+        flex: 0 0 40px;
     }
 
     &__properties {
-        position: absolute;
-        right: -330px;
-        top: -1px;
-        width: 300px;
         background-color: #F2F2F2;
-        border: solid 1px #333;
+        border-left: solid 1px #333;
         padding: 15px;
         height: calc(100% - 30px);
+        flex: 0 0 300px;
 
         .ms-Label {
             text-transform: uppercase;
