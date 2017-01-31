@@ -1,4 +1,5 @@
 import * as angular from 'angular';
+import debounce = require('lodash/debounce');
 import { DrawStateService } from './reducers';
 import { DrawToolsService } from './tools';
 import { DrawController } from './editor';
@@ -27,8 +28,6 @@ DrawModule.directive('draw', [
             restrict: 'EA',
             bindToController: true,
             scope: {
-                'width': '@width',
-                'height': '@height',
                 'save': '&onSave',
                 'events': '&onEvents'
             },
@@ -43,6 +42,9 @@ DrawModule.directive('draw', [
 
                         <i class="ms-Icon ms-Icon--{{tool.icon}}"></i>
                     </artice>
+                </section>
+                <section class="draw__properties" ng-if="!Draw.state.current">
+                    <p>Draw or choose a shape to display its properties</p>
                 </section>
                 <section class="draw__properties" ng-if="Draw.state.current">
                     <section class="scroll-container">                               
@@ -62,11 +64,21 @@ DrawModule.directive('draw', [
             controller: ['$scope', 'DrawToolsService', 'DrawStateService', DrawController],
             controllerAs: 'Draw',
             link: (scope: any, element, attrs) => {
+                const resize = ((scope: any, element: JQuery) => {
+                    let width = element.parent().width();
+                    let height = element.parent().height();
+                    (scope.Draw as DrawController).rescale(element, width, height);
+                });
+
                 element.addClass('draw__container');
                 let canvas$ = element.children('.draw__canvas')[0] as HTMLCanvasElement;
                 state.init(canvas$);
-                (scope.Draw as DrawController).rescale(element);
+                resize(scope, element);
                 (scope.Draw as DrawController).subscribeToEvents();
+                let debounceResize = debounce(() => resize(scope, element), 250);
+                window.addEventListener('resize', debounceResize);
+
+                scope.$on('$destroy', () => window.removeEventListener('resize'));
             }
         };
     }
