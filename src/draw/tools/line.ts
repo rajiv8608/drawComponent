@@ -7,7 +7,8 @@ const lineDefaults: fabric.ILineOptions = {
     y1: 0,
     x2: 300,
     y2: 300,
-    borderColor: 'transparent',
+    stroke: 'black',
+    strokeWidth: 0.1,
     fill: new Color('#000000').hex
 };
 

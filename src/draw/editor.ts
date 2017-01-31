@@ -63,11 +63,6 @@ export class DrawController {
         switch (tool.id) {
             case 'tool__save': return this.state.save();
             case 'tool__load': return this.state.loadFabricSVG();
-            case 'tool__arrow': {
-                let rectangle = this.state.add(this.tools.find(tool => tool.id === 'tool__rectangle'), { height: 2, width: 300, fill: '#000000', top: (this.height) / 2, left: (this.width - 300) / 2 });
-                let triangle = this.state.add(this.tools.find(tool => tool.id === 'tool__triangle'), { height: 20, width: 20, fill: '#000000', angle: -90, top: (this.height) / 2, left: (this.width - 300) / 2 });
-                return await Promise.all([rectangle, triangle]);
-            }
             default:
                 await this.state.add(tool);
                 this.properties = this._tools.getProperties(this.state.current, tool.id);

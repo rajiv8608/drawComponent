@@ -4,6 +4,7 @@ import { Circle, drawCircle, CIRCLE_PROPS } from './circle';
 import { Triangle, drawTriangle, TRIANGLE_PROPS } from './triangle';
 import { Rectangle, drawRectangle, RECTANGLE_PROPS } from './rectangle';
 import { Line, drawLine, LINE_PROPS } from './line';
+import { Arrow, drawArrow, ARROW_PROPS } from './arrow';
 import { Text, drawText, TEXT_PROPS } from './text';
 import { Icon, drawIcon, ICON_PROPS } from './icon';
 import { Image, drawImage, IMAGE_PROPS } from './image';
@@ -32,6 +33,8 @@ export class DrawToolsService {
         Triangle,
         Rectangle,
         Text,
+        Arrow,
+        Line,
         Icon,
         Image,
         {
@@ -60,8 +63,14 @@ export class DrawToolsService {
             case 'tool__text':
                 return drawText;
 
+            case 'tool__line':
+                return drawLine;
+
             case 'tool__icon':
                 return drawIcon;
+
+            case 'tool__arrow':
+                return drawArrow;
 
             case 'tool__image':
                 return drawImage;
@@ -84,6 +93,10 @@ export class DrawToolsService {
 
             case 'tool__circle':
                 additional = CIRCLE_PROPS;
+                break;
+
+            case 'tool__line':
+                additional = LINE_PROPS;
                 break;
 
             case 'tool__text':
