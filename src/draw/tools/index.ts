@@ -6,7 +6,7 @@ import { Rectangle, drawRectangle, RECTANGLE_PROPS } from './rectangle';
 import { Line, drawLine, LINE_PROPS } from './line';
 import { Text, drawText, TEXT_PROPS } from './text';
 import { Icon, drawIcon, ICON_PROPS } from './icon';
-import { Image, IMAGE_PROPS } from './image';
+import { Image, drawImage, IMAGE_PROPS } from './image';
 export { Tool };
 import pick = require('lodash/pick');
 
@@ -62,6 +62,9 @@ export class DrawToolsService {
 
             case 'tool__icon':
                 return drawIcon;
+
+            case 'tool__image':
+                return drawImage;
 
             default:
                 return;

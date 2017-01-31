@@ -20,18 +20,18 @@ export class DrawStateService {
     async add(tool: Tool, options?: fabric.IObjectOptions) {
         this.tool = tool;
         let shape;
-        if (tool.id !== 'tool__image') {
-            let drawTool = this._tools.getToolAction(tool.id);
-            shape = drawTool({ ...options, name: tool.id });
+        let drawTool = this._tools.getToolAction(tool.id) as any;
+        if (tool.id === 'tool__image') {
+            try {
+                shape = await drawTool({ ...options, name: tool.id });
+            }
+            catch (e) {
+                console.error(e);
+                return;
+            }
         }
         else {
-            let url = window.prompt('URL', 'Enter the image url');
-            let deferred = this.$q.defer();
-            fabric.Image.fromURL(url, (image) => {
-                image.scale(0.5);
-                deferred.resolve(image);
-            });
-            shape = await deferred.promise;
+            shape = drawTool({ ...options, name: tool.id });
         }
         this.canvas.add(shape);
         this.canvas.setActiveObject(shape);
