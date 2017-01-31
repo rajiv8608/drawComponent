@@ -2,6 +2,7 @@ import * as angular from 'angular';
 import * as _fabric from 'fabric';
 let fabric = (_fabric as any).fabric as typeof _fabric;
 
+import { Storage } from '@microsoft/office-js-helpers';
 import { DrawModule } from '../module';
 import { Tool } from '../models';
 import { DrawToolsService } from '../tools';
@@ -12,9 +13,14 @@ export class DrawStateService {
     canvas: fabric.Canvas = null;
     tool: Tool;
     current: fabric.Object;
+    private _cache = new Storage('draw_tool_cache');
 
     init(canvas$: HTMLCanvasElement) {
         this.canvas = new fabric.Canvas(canvas$);
+        if (this._cache.contains('lastSession')) {
+            let data = this._cache.get('lastSession');
+            this.canvas.loadFromJSON(data, () => { });
+        }
     }
 
     async add(tool: Tool, options?: fabric.IObjectOptions) {
@@ -36,6 +42,7 @@ export class DrawStateService {
         this.canvas.add(shape);
         this.canvas.setActiveObject(shape);
         this.current = shape;
+        this.saveState()
         return shape;
     }
 
@@ -47,6 +54,7 @@ export class DrawStateService {
         });
 
         this.current.set(name, tool);
+        this.saveState()
     }
 
     remove() {
@@ -75,6 +83,7 @@ export class DrawStateService {
                     let obj = fabric.util.groupSVGElements(objects, options);
                     this.canvas.add(obj).renderAll();
                     deferred.resolve(true);
+                    this.saveState()
                 });
             }
             else {
@@ -82,6 +91,7 @@ export class DrawStateService {
                     let obj = fabric.util.groupSVGElements(objects, options);
                     this.canvas.add(obj).renderAll();
                     deferred.resolve(true);
+                    this.saveState()
                 });
             }
         }
@@ -102,6 +112,13 @@ export class DrawStateService {
             document.body.appendChild(downloadLink);
             downloadLink.click();
             document.body.removeChild(downloadLink);
+            this.saveState();
         }
     };
+
+    saveState() {
+        let json = this.canvas.toDatalessJSON();
+        console.info('caching: ', json);
+        this._cache.insert('lastSession', json);
+    }
 }

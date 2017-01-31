@@ -32,6 +32,7 @@ export class DrawController {
         }));
 
         this.state.canvas.on('object:modified', () => this._scope.$applyAsync(() => {
+            this.state.saveState();
             this.state.current = this.state.canvas.getActiveObject();
             if (this.state.current == null) {
                 return;
