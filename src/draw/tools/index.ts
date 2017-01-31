@@ -14,6 +14,7 @@ import { pick } from 'lodash';
 const baseProperties = [
     'top',
     'left',
+    'angle',
     'scaleX',
     'scaleY',
     'opacity',
@@ -31,10 +32,24 @@ export class DrawToolsService {
         Circle,
         Triangle,
         Rectangle,
-        Line,
         Text,
         Icon,
-        Image
+        Image,
+        {
+            icon: 'Save',
+            id: 'tool__save',
+            name: 'Export to SVG'
+        },
+        {
+            icon: 'OpenFile',
+            id: 'tool__load',
+            name: 'Import from SVG'
+        },
+        {
+            icon: 'ArrowUpRight8',
+            id: 'tool__arrow',
+            name: 'Draw Arrow'
+        },
     ];
 
     getToolAction(id: string) {
@@ -47,9 +62,6 @@ export class DrawToolsService {
 
             case 'tool__circle':
                 return drawCircle;
-
-            case 'tool__line':
-                return drawLine;
 
             case 'tool__text':
                 return drawText;
@@ -76,10 +88,6 @@ export class DrawToolsService {
 
             case 'tool__circle':
                 additional = CIRCLE_PROPS;
-                break;
-
-            case 'tool__line':
-                additional = LINE_PROPS;
                 break;
 
             case 'tool__text':

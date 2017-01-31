@@ -4,7 +4,7 @@ import { Tool, Color } from '../models';
 const circleDefaults: fabric.ICircleOptions = {
     radius: 60,
     borderColor: 'transparent',
-    fill: new Color('#FF4444').hex
+    fill: new Color('#0078D7').hex
 };
 
 export const Circle: Tool = {

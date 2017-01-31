@@ -25,7 +25,3 @@ export class DrawError extends Error {
         }
     }
 }
-
-export const type = <T>(value: string) => {
-    return <T>(value as any);
-};

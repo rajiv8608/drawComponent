@@ -1,7 +1,7 @@
 import { Tool, Color } from '../models';
 
 const textDefaults: fabric.ITextOptions = {
-    fontSize: 11,
+    fontSize: 32,
     fontFamily: 'Segoe MDL2 Assets'
 };
 
@@ -19,7 +19,7 @@ export const ICON_PROPS = [
 ];
 
 export const drawIcon = (options?: fabric.ITextOptions): fabric.IText => {
-    return new fabric.Text('U+E001', {
+    return new fabric.Text('', {
         ...textDefaults,
         ...options
     });

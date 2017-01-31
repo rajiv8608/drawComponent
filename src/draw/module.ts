@@ -11,9 +11,10 @@ DrawModule.factory('DrawToolsService', () => {
 });
 
 DrawModule.factory('DrawStateService', [
+    '$q',
     'DrawToolsService',
-    (toolsService: DrawToolsService) => {
-        let service = new DrawStateService(toolsService);
+    ($q, toolsService: DrawToolsService) => {
+        let service = new DrawStateService($q, toolsService);
         return service;
     }]
 );
@@ -37,17 +38,17 @@ DrawModule.directive('draw', [
                     <artice class="draw__tool" 
                         ng-repeat="tool in Draw.tools track by $index"
                         ng-class="{'draw__tool--selected':tool.id===Draw.state.tool.id}"
-                        ng-click="Draw.drawTool(tool)" 
+                        ng-click="Draw.draw(tool)" 
                         id="{{tool.id}}" title="{{tool.name}}">
 
                         <i class="ms-Icon ms-Icon--{{tool.icon}}"></i>
                     </artice>
                 </section>
-                <section class="draw__properties" ng-if="Draw.state.currentObject">
+                <section class="draw__properties" ng-if="Draw.state.current">
                     <section class="scroll-container">                               
-                        <div class="ms-TextField" ng-repeat="(key, value) in (Draw.state.currentObject) track by $index">
+                        <div class="ms-TextField" ng-repeat="(key, value) in (Draw.properties) track by $index">
                             <label class="ms-Label">{{key}}</label>
-                            <input class="ms-TextField-field" type="text" value="{{value}}" placeholder="{{key}}" >
+                            <input class="ms-TextField-field" type="text" ng-model="Draw.properties[key]" placeholder="{{key}}" >
                         </div>
                     </section>
                     <button class="ms-Button ms-Button--primary" ng-click="Draw.update()">
@@ -56,9 +57,6 @@ DrawModule.directive('draw', [
                     <button class="ms-Button" ng-click="Draw.remove()">
                         <span class="ms-Button-label">Delete</span>
                     </button>  
-                    <button class="ms-Button" ng-click="Draw.clear()">
-                        <span class="ms-Button-label">Cancel</span>
-                    </button>                      
                 </section>
             `,
             controller: ['$scope', 'DrawToolsService', 'DrawStateService', DrawController],
@@ -68,7 +66,7 @@ DrawModule.directive('draw', [
                 let canvas$ = element.children('.draw__canvas')[0] as HTMLCanvasElement;
                 state.init(canvas$);
                 scope.Draw.rescale(element, scope.width, scope.height);
-                scope.Draw.listenForChanges();
+                scope.Draw.subscribeToEvents();
             }
         };
     }

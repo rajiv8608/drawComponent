@@ -1,105 +1,87 @@
 import * as angular from 'angular';
-import { Reducer } from 'redux';
 import { DrawModule } from '../module';
 import { Tool } from '../models';
 import { DrawToolsService } from '../tools';
-import { createStore, Store } from 'redux';
-
-export interface IDrawState {
-    isInitialzed?: boolean
-    tool?: Tool,
-    currentObject?: fabric.IObject,
-    objects?: fabric.IObject[],
-};
-
-const initialState: IDrawState = {
-    isInitialzed: false,
-    tool: null,
-    currentObject: null,
-    objects: [],
-};
-
-const createReducer = (canvas: fabric.ICanvas, tools: DrawToolsService) => {
-    return (state: IDrawState = initialState, action) => {
-        switch (action.type) {
-            case 'SELECT_TOOL': {
-                let {tool} = action;
-                return { ...state, tool };
-            }
-
-            case 'RESCALE': {
-                let {width, height} = action;
-                canvas.setWidth(width);
-                canvas.setHeight(height);
-                return state;
-            }
-
-            case 'SELECTION_CHANGED': {
-                let currentObject = canvas.getActiveObject();
-                return { ...state, currentObject };
-            }
-
-            case 'UPDATE': {
-                let {props} = action;
-                let currentObject = state.currentObject;
-                let objects = canvas.getObjects();
-                props.forEach((name, value) => {
-                    console.log(`updating ${name}:${value}`);
-                    currentObject.set(name, value);
-                });
-                return { ...state, objects, currentObject };
-            }
-
-            case 'REMOVE': {
-                let currentObject = state.currentObject;
-                currentObject.remove();
-                canvas.setActiveObject(null);
-                let objects = canvas.getObjects();
-                return { ...state, objects, currentObject };
-            }
-
-            case 'DRAW': {
-                let {tool} = state;
-                let {options} = action;
-
-                if (tool.id !== 'tool__image') {
-                    let drawTool = tools.getToolAction(tool.id);
-                    let currentObject = drawTool(options);
-                    canvas.add(currentObject);
-                    canvas.setActiveObject(currentObject);
-                    let objects = canvas.getObjects();
-                    return { ...state, objects, currentObject };
-                }
-                else {
-                    return fabric.Image.fromURL(options, (oImg) => {
-                        oImg.scale(0.5);
-                        canvas.add(oImg);
-                        canvas.setActiveObject(oImg);
-                        let objects = canvas.getObjects();
-                        return { ...state, objects, currentObject: oImg };
-                    });
-                }
-            }
-        }
-    };
-};
+import { forEach } from 'lodash';
 
 export class DrawStateService {
-    private _canvas: fabric.ICanvas = null;
-    currentState: Store<IDrawState>;
-
-    constructor(private _tools: DrawToolsService) { }
+    constructor(private $q: angular.IQService, private _tools: DrawToolsService) { }
+    canvas: fabric.ICanvas = null;
+    tool: Tool;
+    current: fabric.IObject;
 
     init(canvas$: HTMLCanvasElement) {
-        let { __REDUX_DEVTOOLS_EXTENSION__ } = (window as any);
-        this._canvas = new fabric.Canvas(canvas$);
-        this.currentState = createStore<IDrawState>(createReducer(this._canvas, this._tools), __REDUX_DEVTOOLS_EXTENSION__ && __REDUX_DEVTOOLS_EXTENSION__());
-        this._subscribeToEvents();
+        this.canvas = new fabric.Canvas(canvas$);
     }
 
-    exportState() {
-        if (this._canvas) {
-            let source = this._canvas.toSVG(null);
+    async add(tool: Tool, options?: fabric.IObjectOptions) {
+        this.tool = tool;
+        let shape;
+        if (tool.id !== 'tool__image') {
+            let drawTool = this._tools.getToolAction(tool.id);
+            shape = drawTool({ ...options, name: tool.id });
+        }
+        else {
+            let url = window.prompt('URL', 'Enter the image url');
+            let deferred = this.$q.defer();
+            fabric.Image.fromURL(url, (image) => {
+                image.scale(0.5);
+                deferred.resolve(image);
+            });
+            shape = await deferred.promise;
+        }
+        this.canvas.add(shape);
+        this.canvas.setActiveObject(shape);
+        this.current = shape;
+        return shape;
+    }
+
+    update(props: any, tool: string) {
+        this.current = this.canvas.getActiveObject();
+        forEach(props, (value, name) => {
+            console.log(`updating ${name}:${value}`);
+            this.current.set(name, value);
+        });
+        this.current.set(name, tool);
+    }
+
+    remove() {
+        this.current.remove();
+    }
+
+    rescale(width, height) {
+        this.canvas.setWidth(width);
+        this.canvas.setHeight(height);
+    }
+
+    load() {
+        let deferred = this.$q.defer();
+        if (this.canvas) {
+            let url = window.prompt('URL', 'Enter the editor svg url');
+            if (/^https?/i.test(url)) {
+                fabric.loadSVGFromURL(url, (objects, options) => {
+                    let obj = fabric.util.groupSVGElements(objects, options);
+                    this.canvas.add(obj).renderAll();
+                    deferred.resolve(true);
+                });
+            }
+            else {
+                fabric.loadSVGFromString(url, (objects, options) => {
+                    let obj = fabric.util.groupSVGElements(objects, options);
+                    this.canvas.add(obj).renderAll();
+                    deferred.resolve(true);
+                });
+            }
+        }
+        else {
+            deferred.reject(false);
+        }
+        return deferred.promise;
+    }
+
+    save() {
+        if (this.canvas) {
+            let source = this.canvas.toSVG(null);
             let blob = new Blob([source], { type: 'image/svg+xml;charset=utf-8' });
             let svgUrl = URL.createObjectURL(blob);
             let downloadLink = document.createElement('a');
@@ -108,13 +90,6 @@ export class DrawStateService {
             document.body.appendChild(downloadLink);
             downloadLink.click();
             document.body.removeChild(downloadLink);
-        }
-    };
-
-    private _subscribeToEvents() {
-        if (this._canvas) {
-            this._canvas.on('object:selected', () => this.currentState.dispatch({ type: 'SELECTION_CHANGED' }));
-            this._canvas.on('selection:cleared', () => this.currentState.dispatch({ type: 'SELECTION_CHANGED' }));
         }
     };
 }

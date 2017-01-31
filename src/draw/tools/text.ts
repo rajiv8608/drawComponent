@@ -2,7 +2,7 @@ import { Tool, Color } from '../models';
 
 const textDefaults: fabric.IITextOptions = {
     fontFamily: 'Segoe UI',
-    fontSize: 16
+    fontSize: 32
 };
 
 export const TEXT_PROPS = [

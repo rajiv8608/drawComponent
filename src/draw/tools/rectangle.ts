@@ -6,7 +6,7 @@ const rectangleDefaults: fabric.IRectOptions = {
     rx: 0,
     ry: 0,
     borderColor: 'transparent',
-    fill: new Color('#FF4444').hex
+    fill: new Color('#00CC66').hex
 };
 
 export const RECTANGLE_PROPS = [
