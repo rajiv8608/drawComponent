@@ -7,6 +7,7 @@ let ExtractTextPlugin = require('extract-text-webpack-plugin');
 module.exports = {
     entry: {
         'app': './src/app.ts',
+        'vendor': './src/vendor.ts',        
         'draw': './src/draw/index.ts'
     },
 
@@ -40,7 +41,7 @@ module.exports = {
             "window.jQuery": "jquery"
         }),
         new webpack.optimize.CommonsChunkPlugin({
-            name: ['draw', 'app'].reverse()
+            name: ['draw', 'app', 'vendor'].reverse()
         })
     ]
 };
