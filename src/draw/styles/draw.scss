@@ -39,11 +39,23 @@ body {
         background-color: #F2F2F2;
         border-left: solid 1px #333;
         padding: 15px;
-        height: calc(100% - 30px);
-        flex: 0 0 300px;
+        display: flex;
+        width: 300px;
+        flex-direction: column; 
 
-        .ms-Label {
-            text-transform: uppercase;
+        .actions {
+            display: flex;
+            flex: 0 0 auto;
+        }
+
+        .draw__tool {
+            border: none;
+            outline: none;
+            margin-right: 7.5px;
+
+            &::last-child {
+                margin-right: 0; 
+            }
         }
     }
 
@@ -68,6 +80,6 @@ body {
 
 .scroll-container {
     @include vScroll();    
-    height: calc(100% - 45px);
     margin: 0 0 15px;
+    flex: 1 1 auto;
 }

@@ -44,7 +44,7 @@ DrawModule.directive('draw', [
                     </artice>
                 </section>
                 <section class="draw__properties" ng-if="!Draw.state.current">
-                    <p>Draw or choose a shape to display its properties</p>
+                    <p>Draw or choose a shape to display its properties</p>       
                 </section>
                 <section class="draw__properties" ng-if="Draw.state.current">
                     <section class="scroll-container">                               
@@ -53,12 +53,20 @@ DrawModule.directive('draw', [
                             <input class="ms-TextField-field" type="text" ng-model="Draw.properties[key]" placeholder="{{key}}" >
                         </div>
                     </section>
-                    <button class="ms-Button ms-Button--primary" ng-click="Draw.update()">
-                        <span class="ms-Button-label">Save</span>
-                    </button>  
-                    <button class="ms-Button" ng-click="Draw.remove()">
-                        <span class="ms-Button-label">Delete</span>
-                    </button>  
+                    <section class="actions">
+                        <button class="draw__tool" ng-click="Draw.update()">
+                            <i class="ms-Icon ms-Icon--Save"></i>
+                        </button>  
+                        <button class="draw__tool" ng-click="Draw.remove()">
+                            <i class="ms-Icon ms-Icon--Delete"></i>
+                        </button>                      
+                        <button class="draw__tool" title="Bring to Top" ng-click="Draw.bringToFront()">
+                            <i class="ms-Icon ms-Icon--GroupedAscending"></i>
+                        </button>
+                        <button class="draw__tool" title="Send to Back" ng-click="Draw.sendToBack()">
+                            <i class="ms-Icon ms-Icon--GroupedDescending"></i>
+                        </button> 
+                    </section> 
                 </section>
             `,
             controller: ['$scope', 'DrawToolsService', 'DrawStateService', DrawController],

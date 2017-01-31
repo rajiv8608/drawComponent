@@ -43,12 +43,7 @@ export class DrawToolsService {
             icon: 'OpenFile',
             id: 'tool__load',
             name: 'Import from SVG'
-        },
-        {
-            icon: 'ArrowUpRight8',
-            id: 'tool__arrow',
-            name: 'Draw Arrow'
-        },
+        }
     ];
 
     getToolAction(id: string) {
@@ -69,7 +64,6 @@ export class DrawToolsService {
                 return drawIcon;
 
             default:
-                console.log(`tool ins't implemented yet`);
                 return;
         }
     };
@@ -102,7 +96,6 @@ export class DrawToolsService {
                 break;
 
             default:
-                console.log(`tool ins't implemented yet`);
                 return;
         }
 

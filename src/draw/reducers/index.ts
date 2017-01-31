@@ -53,6 +53,14 @@ export class DrawStateService {
         this.current.remove();
     }
 
+    bringToFront() {
+        return this.current.bringToFront();
+    }
+
+    sendToBack() {
+        return this.current.sendToBack();
+    }
+
     rescale(width, height) {
         this.canvas.setWidth(width - 373 /* container - tools - properties - borders */);
         this.canvas.setHeight(height - 1 /* borders */);
