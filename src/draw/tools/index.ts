@@ -8,6 +8,7 @@ import { Arrow, drawArrow, ARROW_PROPS } from './arrow';
 import { Text, drawText, TEXT_PROPS } from './text';
 import { Icon, drawIcon, ICON_PROPS } from './icon';
 import { Image, drawImage, IMAGE_PROPS } from './image';
+import { drawSVG, SVG } from './svg';
 export { Tool };
 import pick = require('lodash/pick');
 
@@ -36,7 +37,8 @@ export class DrawToolsService {
         Arrow,
         Line,
         Icon,
-        Image
+        Image,
+        SVG        
     ];
 
     getToolAction(id: string) {
@@ -64,6 +66,9 @@ export class DrawToolsService {
 
             case 'tool__image':
                 return drawImage;
+
+            case 'tool__svg':
+                return drawSVG;
 
             default:
                 return;
@@ -99,6 +104,10 @@ export class DrawToolsService {
 
             case 'tool__image':
                 additional = IMAGE_PROPS;
+                break;
+
+            case 'tool__group':
+                additional = [];
                 break;
 
             default:

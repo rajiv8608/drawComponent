@@ -26,31 +26,27 @@ export class DrawController {
     }
 
     subscribeToEvents() {
-        this.state.canvas.on('object:selected', () => this._scope.$applyAsync(() => {
-            this.state.current = this.state.canvas.getActiveObject();
-            if (this.state.current == null) {
-                return;
+        const _update = (clear?: boolean) => {
+            let obj = this.state.canvas.getActiveObject();
+            if (obj == null) {
+                obj = this.state.canvas.getActiveGroup();
             }
-            this.properties = this._tools.getProperties(this.state.current, this.state.current.name || `tool__${this.state.current.type}`);
-        }));
+            if (obj == null) {
+                return null;
+            }
+            let {name, type} = obj;
+            this.properties = clear ? null : this._tools.getProperties(obj, name || `tool__${type}`);
+        }
+
+        this.state.canvas.on('object:selected', () => this._scope.$applyAsync(() => _update()));
 
         this.state.canvas.on('object:modified', () => this._scope.$applyAsync(() => {
             this.state.saveState();
-            this.state.current = this.state.canvas.getActiveObject();
-            if (this.state.current == null) {
-                return;
-            }
-
-            this.properties = this._tools.getProperties(this.state.current, this.state.current.name || `tool__${this.state.current.type}`);
+            _update();
         }));
 
         this.state.canvas.on('selection:cleared', () => this._scope.$applyAsync(() => {
-            this.state.current = this.state.canvas.getActiveObject();
-            if (this.state.current == null) {
-                return;
-            }
-
-            this.properties = null;
+            _update(true);
         }));
     }
 

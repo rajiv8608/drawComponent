@@ -1,6 +1,8 @@
 import * as _fabric from 'fabric';
 import { Tool, Color } from '../models';
 let fabric = (_fabric as any).fabric as typeof _fabric;
+import { drawLine } from './line';
+import { drawTriangle } from './triangle';
 
 const arrowDefaults: fabric.ITriangleOptions = {
     width: 300,
@@ -22,22 +24,26 @@ export const Arrow: Tool = {
 
 export const drawArrow = (options?: fabric.ITriangleOptions): fabric.Group => {
 
-    let line = new fabric.Line([0, 0, 10, 10], {
-        top: 133,
-        left: 908,
-        angle: 316,
-        stroke: 'black',
-        strokeWidth: 2
+    let triangle = drawTriangle({
+        width: 30,
+        height: 30,
+        top: 50,
+        left: 50
     });
-    let triangle = new fabric.Triangle({
-        width: 20,
-        height: 15,
-        borderColor: 'black',
-        fill: 'black',
-        top: 144,
-        left: 895,
-        angle: 269,
-        stroke: 'black',
+
+    let line = drawLine({
+        x1: 0,
+        x2: 0,
+        y1: 0,
+        y2: 100,
+        top: 80,
+        left: 65
     });
-    return new fabric.Group([line, triangle], { left: 100, top: 100 });
+
+    return new fabric.Group([line, triangle], {
+        left: 100,
+        top: 100,
+        stroke: new Color('#999999').hex,
+        strokeDashArray: [5, 10]
+    });
 };

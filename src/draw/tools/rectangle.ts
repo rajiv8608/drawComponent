@@ -9,7 +9,8 @@ const rectangleDefaults: fabric.IRectOptions = {
     ry: 0,
     borderColor: 'transparent',
     fill: 'transparent',
-    stroke: new Color('#00CC66').hex
+    stroke: new Color('#00CC66').hex,
+    strokeWidth: 3
 };
 
 export const RECTANGLE_PROPS = [
