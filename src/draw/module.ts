@@ -44,29 +44,42 @@ DrawModule.directive('draw', [
                     </artice>
                 </section>
                 <section class="draw__properties" ng-if="!Draw.state.current">
-                    <p>Draw or choose a shape to display its properties</p>       
+                    <h3 class="ms-font-l">Project Actions</h3>
+                    <section class="actions">                                            
+                        <button class="draw__tool" ng-click="Draw.state.save()">
+                            <i class="ms-Icon ms-Icon--Save"></i>
+                        </button>
+                        <button class="draw__tool" ng-click="Draw.state.open()">
+                            <i class="ms-Icon ms-Icon--OpenFile"></i>
+                        </button>  
+                        <button class="draw__tool" ng-click="Draw.state.clear()">
+                            <i class="ms-Icon ms-Icon--Delete"></i>
+                        </button>  
+                    </section>
+                    <p>Draw or choose a shape to display its properties</p>                      
                 </section>
-                <section class="draw__properties" ng-if="Draw.state.current">
+                <section class="draw__properties" ng-if="Draw.state.current">                    
+                    <h3 class="ms-font-l">Tool Actions</h3>                
+                    <section class="actions">
+                        <button class="draw__tool" ng-click="Draw.state.update(Draw.properties)">
+                            <i class="ms-Icon ms-Icon--Save"></i>
+                        </button>  
+                        <button class="draw__tool" ng-click="Draw.state.remove()">
+                            <i class="ms-Icon ms-Icon--Delete"></i>
+                        </button>                      
+                        <button class="draw__tool" title="Bring to Top" ng-click="Draw.state.bringToFront()">
+                            <i class="ms-Icon ms-Icon--GroupedAscending"></i>
+                        </button>
+                        <button class="draw__tool" title="Send to Back" ng-click="Draw.state.sendToBack()">
+                            <i class="ms-Icon ms-Icon--GroupedDescending"></i>
+                        </button> 
+                    </section> 
                     <section class="scroll-container">                               
                         <div class="ms-TextField" ng-repeat="(key, value) in (Draw.properties) track by $index">
                             <label class="ms-Label">{{key}}</label>
                             <input class="ms-TextField-field" type="text" ng-model="Draw.properties[key]" placeholder="{{key}}" >
                         </div>
                     </section>
-                    <section class="actions">
-                        <button class="draw__tool" ng-click="Draw.update()">
-                            <i class="ms-Icon ms-Icon--Save"></i>
-                        </button>  
-                        <button class="draw__tool" ng-click="Draw.remove()">
-                            <i class="ms-Icon ms-Icon--Delete"></i>
-                        </button>                      
-                        <button class="draw__tool" title="Bring to Top" ng-click="Draw.bringToFront()">
-                            <i class="ms-Icon ms-Icon--GroupedAscending"></i>
-                        </button>
-                        <button class="draw__tool" title="Send to Back" ng-click="Draw.sendToBack()">
-                            <i class="ms-Icon ms-Icon--GroupedDescending"></i>
-                        </button> 
-                    </section> 
                 </section>
             `,
             controller: ['$scope', 'DrawToolsService', 'DrawStateService', DrawController],

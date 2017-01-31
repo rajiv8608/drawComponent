@@ -19,7 +19,7 @@ export const RECTANGLE_PROPS = [
 ];
 
 export const Rectangle: Tool = {
-    id: 'tool__rectangle',
+    id: 'tool__rect',
     name: 'Draw Rectangle',
     icon: 'Checkbox'
 };

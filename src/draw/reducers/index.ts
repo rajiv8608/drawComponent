@@ -23,11 +23,14 @@ export class DrawStateService {
         }
     }
 
-    async add(tool: Tool, options?: fabric.IObjectOptions) {
+    async draw(tool: Tool, options?: fabric.IObjectOptions) {
         this.tool = tool;
         let shape;
         let drawTool = this._tools.getToolAction(tool.id) as any;
-        if (tool.id === 'tool__image') {
+        if (tool.id === 'tool__download') {
+            return this.download();
+        }
+        else if (tool.id === 'tool__image') {
             try {
                 shape = await drawTool({ ...options, name: tool.id });
             }
@@ -46,18 +49,16 @@ export class DrawStateService {
         return shape;
     }
 
-    update(props: any, tool: string) {
+    update(props: any) {
         this.current = this.canvas.getActiveObject();
         forEach(props as {}, (value, name) => {
-            console.log(`updating ${name}:${value}`);
             this.current.set(name, value);
         });
-
-        this.current.set(name, tool);
-        this.saveState()
+        this.saveState();
     }
 
     remove() {
+        // Bug with groups
         this.current.remove();
     }
 
@@ -101,24 +102,96 @@ export class DrawStateService {
         return deferred.promise;
     }
 
+    clear() {
+        this._cache.clear();
+        this.canvas.clear();
+    }
+
     save() {
-        if (this.canvas) {
-            let source = this.canvas.toSVG(null);
-            let blob = new Blob([source], { type: 'image/svg+xml;charset=utf-8' });
-            let svgUrl = URL.createObjectURL(blob);
-            let downloadLink = document.createElement('a');
-            downloadLink.href = svgUrl;
-            downloadLink.download = 'newesttree.svg';
-            document.body.appendChild(downloadLink);
-            downloadLink.click();
-            document.body.removeChild(downloadLink);
-            this.saveState();
-        }
-    };
+        let json = this.saveState();
+        if (json == null) { return; }
+        let blob = new Blob([JSON.stringify(json)], { type: 'application/json;charset=utf-8' });
+        this._saveFile(blob, 'new_project.json');
+    }
+
+    async open() {
+        await new Promise(async (resolve) => {
+            let result = await this._loadFile();
+            if (result == null) { return; }
+            this.canvas.loadFromJSON(result, e => {
+                resolve(e);
+            });
+        });;
+    }
+
+    download() {
+        if (this.canvas == null) { return; }
+        let source = this.canvas.toSVG(null);
+        let blob = new Blob([source], { type: 'image/svg+xml;charset=utf-8' });
+        this._saveFile(blob, 'new_project.svg');
+    }
 
     saveState() {
         let json = this.canvas.toDatalessJSON();
         console.info('caching: ', json);
-        this._cache.insert('lastSession', json);
+        return this._cache.insert('lastSession', json);
+    }
+
+    private _saveFile(blob: Blob, name: string) {
+        let url = URL.createObjectURL(blob);
+        let downloadLink = document.createElement('a');
+        downloadLink.href = url;
+        downloadLink.download = name;
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+        this.saveState();
+    };
+
+    private async _loadFile() {
+        let fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.style.display = 'none';
+        document.body.appendChild(fileInput);
+        fileInput.click();
+        let promise = new Promise<string>((resolve, reject) => {
+            fileInput.onchange = (e: any) => {
+                try {
+                    let file = e.target.files[0];
+                    if (file == null) {
+                        return;
+                    }
+                    let reader = new FileReader();
+                    reader.onload = (e: any) => {
+                        try {
+                            let contents = e.target.result;
+                            resolve(contents && contents.trim());
+                        }
+                        catch (e) {
+                            reject(e);
+                        }
+                    };
+                    reader.onerror = (e: any) => {
+                        reject(e);
+                    }
+                    reader.readAsText(file);
+                }
+                catch (e) {
+                    reject(e);
+                }
+            };
+        });
+
+        let result: string = null;
+        try {
+            result = await promise;
+        }
+        catch (e) {
+            console.info('Unable to load file:', e);
+        }
+        finally {
+            document.body.removeChild(fileInput);
+            return result;
+        }
     }
 }

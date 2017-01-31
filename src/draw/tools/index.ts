@@ -36,22 +36,12 @@ export class DrawToolsService {
         Arrow,
         Line,
         Icon,
-        Image,
-        {
-            icon: 'Save',
-            id: 'tool__save',
-            name: 'Export to SVG'
-        },
-        {
-            icon: 'OpenFile',
-            id: 'tool__load',
-            name: 'Import from SVG'
-        }
+        Image
     ];
 
     getToolAction(id: string) {
         switch (id) {
-            case 'tool__rectangle':
+            case 'tool__rect':
                 return drawRectangle;
 
             case 'tool__triangle':
@@ -83,7 +73,7 @@ export class DrawToolsService {
     getProperties(object: any, id: string) {
         let additional = [];
         switch (id) {
-            case 'tool__rectangle':
+            case 'tool__rect':
                 additional = RECTANGLE_PROPS;
                 break;
 

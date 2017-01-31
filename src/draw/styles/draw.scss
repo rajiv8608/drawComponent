@@ -43,9 +43,14 @@ body {
         width: 300px;
         flex-direction: column; 
 
+        h3 {
+            margin-top: 0;
+        }
+
         .actions {
             display: flex;
             flex: 0 0 auto;
+            border-bottom: solid 1px #333;            
         }
 
         .draw__tool {
@@ -80,6 +85,6 @@ body {
 
 .scroll-container {
     @include vScroll();    
-    margin: 0 0 15px;
+    margin: 15px 0 0;
     flex: 1 1 auto;
 }
