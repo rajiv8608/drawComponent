@@ -133,7 +133,6 @@ export class DrawStateService {
 
     saveState() {
         let json = this.canvas.toDatalessJSON();
-        console.info('caching: ', json);
         return this._cache.insert('lastSession', json);
     }
 

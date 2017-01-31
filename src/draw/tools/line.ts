@@ -3,13 +3,13 @@ import { Tool, Color } from '../models';
 let fabric = (_fabric as any).fabric as typeof _fabric;
 
 const lineDefaults: fabric.ILineOptions = {
-    x1: 0,
+    x1: 50,
     y1: 0,
-    x2: 300,
+    x2: 50,
     y2: 300,
-    stroke: 'black',
-    strokeWidth: 0.1,
-    fill: new Color('#000000').hex
+    stroke: new Color('#000000').hex,
+    strokeWidth: 1,
+    fill: new Color('#000000').hex,
 };
 
 export const LINE_PROPS = [
@@ -26,7 +26,7 @@ export const Line: Tool = {
 };
 
 export const drawLine = (options?: fabric.ILineOptions): fabric.Rect => {
-    return new fabric.Line([0, 0, 10, 10], {
+    return new fabric.Line([lineDefaults.x1, lineDefaults.y1, lineDefaults.x2, lineDefaults.y2], {
         ...lineDefaults,
         ...options
     });

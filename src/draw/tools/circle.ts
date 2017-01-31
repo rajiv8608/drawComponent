@@ -5,7 +5,8 @@ let fabric = (_fabric as any).fabric as typeof _fabric;
 const circleDefaults: fabric.ICircleOptions = {
     radius: 60,
     borderColor: 'transparent',
-    fill: new Color('#0078D7').hex
+    fill: 'transparent',
+    stroke: new Color('#0078d7').hex
 };
 
 export const Circle: Tool = {
