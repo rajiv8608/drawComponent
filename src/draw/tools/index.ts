@@ -4,6 +4,7 @@ import { Circle, drawCircle, CIRCLE_PROPS } from './circle';
 import { Triangle, drawTriangle, TRIANGLE_PROPS } from './triangle';
 import { Rectangle, drawRectangle, RECTANGLE_PROPS } from './rectangle';
 import { Line, drawLine, LINE_PROPS } from './line';
+import { Arrow, drawArrow, ARROW_PROPS } from './arrow';
 import { Text, drawText, TEXT_PROPS } from './text';
 import { Icon, drawIcon, ICON_PROPS } from './icon';
 import { Image, IMAGE_PROPS } from './image';
@@ -32,6 +33,8 @@ export class DrawToolsService {
         Triangle,
         Rectangle,
         Text,
+        Arrow,
+        Line,
         Icon,
         Image,
         {
@@ -43,12 +46,7 @@ export class DrawToolsService {
             icon: 'OpenFile',
             id: 'tool__load',
             name: 'Import from SVG'
-        },
-        {
-            icon: 'ArrowUpRight8',
-            id: 'tool__arrow',
-            name: 'Draw Arrow'
-        },
+        }
     ];
 
     getToolAction(id: string) {
@@ -65,8 +63,14 @@ export class DrawToolsService {
             case 'tool__text':
                 return drawText;
 
+            case 'tool__line':
+                return drawLine;
+
             case 'tool__icon':
                 return drawIcon;
+
+            case 'tool__arrow':
+                return drawArrow;
 
             default:
                 console.log(`tool ins't implemented yet`);
@@ -87,6 +91,10 @@ export class DrawToolsService {
 
             case 'tool__circle':
                 additional = CIRCLE_PROPS;
+                break;
+
+            case 'tool__line':
+                additional = LINE_PROPS;
                 break;
 
             case 'tool__text':
