@@ -39,9 +39,11 @@ export class DrawController {
     }
 
     rescale(container) {
-        container.width((+this.width) + 40);
-        container.height(+this.height);
-        this.state.rescale(+this.width, +this.height);
+        let width = (+this.width) || window.outerWidth;
+        let height = (+this.height) || window.outerHeight;
+        container.width(width + 40);
+        container.height(height);
+        this.state.rescale(width, height);
     };
 
     async draw(tool: Tool) {

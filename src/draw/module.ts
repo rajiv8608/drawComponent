@@ -65,8 +65,8 @@ DrawModule.directive('draw', [
                 element.addClass('draw__container');
                 let canvas$ = element.children('.draw__canvas')[0] as HTMLCanvasElement;
                 state.init(canvas$);
-                scope.Draw.rescale(element, scope.width, scope.height);
-                scope.Draw.subscribeToEvents();
+                (scope.Draw as DrawController).rescale(element);
+                (scope.Draw as DrawController).subscribeToEvents();
             }
         };
     }
