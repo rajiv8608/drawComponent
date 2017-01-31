@@ -7,7 +7,7 @@ import { Line, drawLine, LINE_PROPS } from './line';
 import { Arrow, drawArrow, ARROW_PROPS } from './arrow';
 import { Text, drawText, TEXT_PROPS } from './text';
 import { Icon, drawIcon, ICON_PROPS } from './icon';
-import { Image, IMAGE_PROPS } from './image';
+import { Image, drawImage, IMAGE_PROPS } from './image';
 export { Tool };
 import pick = require('lodash/pick');
 
@@ -69,11 +69,15 @@ export class DrawToolsService {
             case 'tool__icon':
                 return drawIcon;
 
+<<<<<<< HEAD
             case 'tool__arrow':
                 return drawArrow;
+=======
+            case 'tool__image':
+                return drawImage;
+>>>>>>> 41ca9f4c70cf693b1eb9f3b61442c5f894de9004
 
             default:
-                console.log(`tool ins't implemented yet`);
                 return;
         }
     };
@@ -110,7 +114,6 @@ export class DrawToolsService {
                 break;
 
             default:
-                console.log(`tool ins't implemented yet`);
                 return;
         }
 

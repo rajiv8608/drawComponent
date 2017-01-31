@@ -24,16 +24,28 @@ export class DrawController {
     subscribeToEvents() {
         this.state.canvas.on('object:selected', () => this._scope.$applyAsync(() => {
             this.state.current = this.state.canvas.getActiveObject();
+            if (this.state.current == null) {
+                return;
+            }
+
             this.properties = this._tools.getProperties(this.state.current, this.state.current.name);
         }));
 
         this.state.canvas.on('object:modified', () => this._scope.$applyAsync(() => {
             this.state.current = this.state.canvas.getActiveObject();
+            if (this.state.current == null) {
+                return;
+            }
+
             this.properties = this._tools.getProperties(this.state.current, this.state.current.name);
         }));
 
         this.state.canvas.on('selection:cleared', () => this._scope.$applyAsync(() => {
             this.state.current = this.state.canvas.getActiveObject();
+            if (this.state.current == null) {
+                return;
+            }
+
             this.properties = null;
         }));
     }
@@ -54,6 +66,14 @@ export class DrawController {
                 await this.state.add(tool);
                 this.properties = this._tools.getProperties(this.state.current, tool.id);
         }
+    }
+
+    bringToFront() {
+        this.state.bringToFront();
+    }
+
+    sendToBack() {
+        this.state.sendToBack();
     }
 
     remove() {
