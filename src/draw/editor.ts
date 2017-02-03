@@ -26,7 +26,7 @@ export class DrawController {
     }
 
     subscribeToEvents() {
-        const _update = (clear?: boolean) => {
+        const _update = () => {
             let obj = this.state.canvas.getActiveObject();
             if (obj == null) {
                 obj = this.state.canvas.getActiveGroup();
@@ -35,18 +35,25 @@ export class DrawController {
                 return null;
             }
             let {name, type} = obj;
-            this.properties = clear ? null : this._tools.getProperties(obj, name || `tool__${type}`);
+            return this._tools.getProperties(obj, name || `tool__${type}`);
         }
 
-        this.state.canvas.on('object:selected', () => this._scope.$applyAsync(() => _update()));
+        this.state.canvas.on('object:selected', () => this._scope.$applyAsync(() => {
+            this.properties = _update();
+            /*
+             * BUG: Apply doesn't trigger change detection. 
+             * `properties` is initializated but doesnt show up on the UI
+             */
+        }));
 
         this.state.canvas.on('object:modified', () => this._scope.$applyAsync(() => {
             this.state.saveState();
-            _update();
+            this.properties = _update();
         }));
 
         this.state.canvas.on('selection:cleared', () => this._scope.$applyAsync(() => {
-            _update(true);
+            this.properties = null;
+            _update();
         }));
     }
 

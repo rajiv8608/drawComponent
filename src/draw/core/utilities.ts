@@ -26,6 +26,16 @@ export class DrawError extends Error {
     }
 }
 
+export async function confirm(message: string) {
+    return new Promise((resolve, reject) => {
+        let result = window.confirm(message);
+        if (result == null) {
+            return reject(result);
+        }
+        return resolve(result);
+    });
+}
+
 export function saveFile(blob: Blob, name: string) {
     let url = URL.createObjectURL(blob);
     let downloadLink = document.createElement('a');

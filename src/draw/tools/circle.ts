@@ -7,7 +7,7 @@ const circleDefaults: fabric.ICircleOptions = {
     borderColor: 'transparent',
     fill: 'transparent',
     stroke: new Color('#0078d7').hex,
-    strokeWidth: 3
+    strokeWidth: 2
 };
 
 export const Circle: Tool = {

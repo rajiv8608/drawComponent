@@ -8,7 +8,7 @@ const triangleDefaults: fabric.ITriangleOptions = {
     borderColor: 'transparent',
     fill: 'transparent',
     stroke: new Color('#FF4444').hex,
-    strokeWidth: 3
+    strokeWidth: 2
 };
 
 export const TRIANGLE_PROPS = [

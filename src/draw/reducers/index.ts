@@ -4,7 +4,7 @@ let fabric = (_fabric as any).fabric as typeof _fabric;
 
 import { Storage } from '@microsoft/office-js-helpers';
 import { DrawModule } from '../module';
-import { loadFile, saveFile } from '../core';
+import { loadFile, saveFile, confirm } from '../core';
 import { Tool } from '../models';
 import { DrawToolsService } from '../tools';
 import forEach = require('lodash/forEach');
@@ -66,6 +66,10 @@ export class DrawStateService {
     }
 
     update(props: any) {
+        /* 
+         * BUG: Some controls grow/disappear when properties such as strokeWidth, 
+         * scale or radius etc are updated. Upon refreshing they are available.
+         */
         this.current = this.canvas.getActiveObject();
         forEach(props as {}, (value: string, name) => {
             if (name === 'strokeDashArray' && value) {
@@ -79,7 +83,12 @@ export class DrawStateService {
     }
 
     remove() {
+        /*
+         * BUG: Sometimes objects dont get removed
+         */
         this.current.remove();
+        this.saveState();
+        this.canvas.renderAll();
     }
 
     bringToFront() {
@@ -123,9 +132,17 @@ export class DrawStateService {
         return deferred.promise;
     }
 
-    clear() {
-        this._cache.clear();
-        this.canvas.clear();
+    async clear() {
+        try {
+            let result = await confirm('Are you sure you want to delete the current project?');
+            if (result) {
+                this._cache.clear();
+                this.canvas.clear();
+            }
+        }
+        catch (e) {
+            console.error(e);
+        }
     }
 
     save() {

@@ -8,7 +8,7 @@ const lineDefaults: fabric.ILineOptions = {
     x2: 50,
     y2: 300,
     stroke: new Color('#000000').hex,
-    strokeWidth: 3,
+    strokeWidth: 2,
     fill: new Color('#000000').hex,
 };
 
