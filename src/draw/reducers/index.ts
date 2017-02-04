@@ -15,6 +15,7 @@ export class DrawStateService {
     tool: Tool;
     current: fabric.Object;
     private _cache = new Storage('draw_tool_cache');
+    disableResize = false;
 
     init(canvas$: HTMLCanvasElement) {
         this.canvas = new fabric.Canvas(canvas$);
@@ -30,6 +31,17 @@ export class DrawStateService {
         let drawTool = this._tools.getToolAction(tool.id) as any;
         if (tool.id === 'tool__download') {
             return this.download();
+        }
+        else if (tool.id === 'tool__rescale') {
+            this.disableResize = false;
+            let result = window.prompt('Enter width and height in wxh format');
+            if (result == null) {
+                return;
+            }
+            let [width, height] = result.toLowerCase().split('x');
+            this.rescale(+width, +height);
+            this.disableResize = true;
+            return;
         }
         else if (tool.id === 'tool__image') {
             try {
@@ -100,6 +112,9 @@ export class DrawStateService {
     }
 
     rescale(width, height) {
+        if (this.disableResize) {
+            return;
+        }
         this.canvas.setWidth(width - 373 /* container - tools - properties - borders */);
         this.canvas.setHeight(height - 1 /* borders */);
         this.canvas.renderAll();

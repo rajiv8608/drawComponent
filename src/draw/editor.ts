@@ -22,6 +22,10 @@ export class DrawController {
             icon: 'Download',
             id: 'tool__download',
             name: 'Export to SVG'
+        }, {
+            icon: 'FullScreen',
+            id: 'tool__rescale',
+            name: 'Resize'
         }];
     }
 
