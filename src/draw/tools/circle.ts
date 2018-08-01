@@ -5,15 +5,16 @@ let fabric = (_fabric as any).fabric as typeof _fabric;
 const circleDefaults: fabric.ICircleOptions = {
     radius: 60,
     borderColor: 'transparent',
-    fill: 'transparent',
-    stroke: new Color('#0078d7').hex,
+    fill: new Color('#dd3641').hex,
+    stroke: new Color('#C0202B').hex,
     strokeWidth: 2
 };
 
 export const Circle: Tool = {
     id: 'tool__circle',
     name: 'Draw Circle',
-    icon: 'CircleRing'
+    icon: 'CircleRing',
+    placeholderName: 'Circle'
 };
 
 export const CIRCLE_PROPS = [

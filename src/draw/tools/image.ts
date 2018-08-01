@@ -15,7 +15,8 @@ export const IMAGE_PROPS = ['url'];
 export const Image: Tool = {
     id: 'tool__image',
     name: 'Draw Image',
-    icon: 'Photo2'
+    icon: 'Photo2',
+    placeholderName: 'Image'
 };
 
 export const drawImage = (options?: fabric.ITextOptions): Promise<fabric.Image> => {

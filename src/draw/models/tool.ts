@@ -1,5 +1,6 @@
 export interface Tool {
     id: string,
-    name: string,
-    icon: string
+    name?: string,
+    icon?: string,
+    placeholderName?:string
 }

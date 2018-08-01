@@ -22,6 +22,8 @@ body {
     
         .canvas-container {
             overflow: auto !important;
+            max-height: calc(100% - 0px);
+            max-width: calc(100% - 300px);
         }
     }    
 

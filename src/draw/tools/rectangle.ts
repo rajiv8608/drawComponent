@@ -8,9 +8,9 @@ const rectangleDefaults: fabric.IRectOptions = {
     rx: 0,
     ry: 0,
     borderColor: 'transparent',
-    fill: 'transparent',
-    stroke: new Color('#00CC66').hex,
-    strokeWidth: 2
+    fill: new Color('#dd3641').hex,
+    stroke: new Color('#C0202B').hex,
+    strokeWidth: 2,    
 };
 
 export const RECTANGLE_PROPS = [
@@ -23,7 +23,8 @@ export const RECTANGLE_PROPS = [
 export const Rectangle: Tool = {
     id: 'tool__rect',
     name: 'Draw Rectangle',
-    icon: 'Checkbox'
+    icon: 'Checkbox',
+    placeholderName: 'Rectangle'
 };
 
 export const drawRectangle = (options?: fabric.IRectOptions): fabric.Rect => {

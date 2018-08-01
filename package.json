@@ -11,7 +11,8 @@
   },
   "scripts": {
     "start": "webpack-dev-server --config config/webpack.dev.js --progress",
-    "build": "rimraf dist && webpack --config config/webpack.prod.js --progress --profile --bail"
+    "build": "rimraf dist && webpack --config config/webpack.prod.js --progress --profile --bail",
+    "dev": "cd dist && lite-server"
   },
   "license": "MIT",
   "author": "Bhargav Krishna",
@@ -20,34 +21,35 @@
   },
   "homepage": "https://github.com/WrathOfZombies/draw#readme",
   "devDependencies": {
-    "awesome-typescript-loader": "^3.0.0-beta.17",
+    "@types/angular": "^1.6.3",
+    "@types/fabric": "^1.7.3",
+    "@types/jquery": "^2.0.40",
+    "@types/lodash": "^4.14.52",
     "autoprefixer": "^6.5.4",
+    "awesome-typescript-loader": "^3.0.0-beta.17",
     "css-loader": "^0.25.0",
-    "html-webpack-plugin": "^2.24.0",
     "extract-text-webpack-plugin": "^1.0.1",
+    "html-webpack-plugin": "^2.24.0",
+    "lite-server": "^2.3.0",
     "perfectionist": "^2.3.1",
     "postcss-loader": "^1.1.0",
     "precss": "^1.4.0",
     "raw-loader": "^0.5.1",
     "sass-loader": "^4.0.2",
-    "webpack-dev-server": "^1.16.2",
-    "webpack-merge": "^0.15.0",
-    "webpack": "^1.13.3",
     "tslint": "^3.15.1",
-    "node-sass": "^3.13.0",
-    "@types/angular": "^1.6.3",
-    "@types/lodash": "^4.14.52",
-    "@types/fabric": "^1.5.20",
-    "@types/jquery": "^2.0.40"
+    "webpack": "^1.13.3",
+    "webpack-dev-server": "^1.16.2",
+    "webpack-merge": "^0.15.0"
   },
   "dependencies": {
-    "angular": "^1.6.1",
     "@microsoft/office-js-helpers": "^0.5.0",
+    "angular": "^1.6.1",
     "fabric": "^1.7.3",
     "jquery": "^3.1.1",
     "lodash": "^4.17.4",
-    "office-ui-fabric-core": "^5.1.0",
-    "office-ui-fabric-js": "^1.3.0",
+    "node-sass": "^4.5.3",
+    "office-ui-fabric-core": "^7.2.0",
+    "office-ui-fabric-js": "^1.4.0",
     "typescript": "^2.1.5"
   }
 }

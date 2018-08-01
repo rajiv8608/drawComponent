@@ -7,9 +7,9 @@ const lineDefaults: fabric.ILineOptions = {
     y1: 0,
     x2: 50,
     y2: 300,
-    stroke: new Color('#000000').hex,
+    stroke: new Color('#C0202B').hex,
     strokeWidth: 2,
-    fill: new Color('#000000').hex,
+    fill: new Color('#dd3641').hex,
 };
 
 export const LINE_PROPS = [
@@ -22,12 +22,13 @@ export const LINE_PROPS = [
 export const Line: Tool = {
     id: 'tool__line',
     name: 'Draw Line',
-    icon: 'CalculatorSubtract'
+    icon: 'CalculatorSubtract',
+    placeholderName: 'Line'
 };
 
-export const drawLine = (options?: fabric.ILineOptions): fabric.Rect => {
+export const drawLine = (options?: fabric.ILineOptions): fabric.Line => {
     return new fabric.Line([lineDefaults.x1, lineDefaults.y1, lineDefaults.x2, lineDefaults.y2], {
-        ...lineDefaults,
+        ...lineDefaults as any,
         ...options
     });
 };

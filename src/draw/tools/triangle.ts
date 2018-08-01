@@ -6,8 +6,8 @@ const triangleDefaults: fabric.ITriangleOptions = {
     width: 300,
     height: 150,
     borderColor: 'transparent',
-    fill: 'transparent',
-    stroke: new Color('#FF4444').hex,
+    fill: new Color('#dd3641').hex,
+    stroke: new Color('#C0202B').hex,
     strokeWidth: 2
 };
 
@@ -19,7 +19,8 @@ export const TRIANGLE_PROPS = [
 export const Triangle: Tool = {
     id: 'tool__triangle',
     name: 'Draw Triangle',
-    icon: 'TriangleUp12'
+    icon: 'TriangleUp12',
+    placeholderName: 'Triangle'
 };
 
 export const drawTriangle = (options?: fabric.ITriangleOptions): fabric.Triangle => {

@@ -6,9 +6,10 @@ import { Rectangle, drawRectangle, RECTANGLE_PROPS } from './rectangle';
 import { Line, drawLine, LINE_PROPS } from './line';
 import { Arrow, drawArrow, ARROW_PROPS } from './arrow';
 import { Text, drawText, TEXT_PROPS } from './text';
+import { Textbox, drawTextbox, TEXTBOX_PROPS } from './textbox';
 import { Icon, drawIcon, ICON_PROPS } from './icon';
 import { Image, drawImage, IMAGE_PROPS } from './image';
-import { drawSVG, SVG } from './svg';
+import { drawSVG, SVG, SVG_PROPS } from './svg';
 export { Tool };
 import pick = require('lodash/pick');
 
@@ -34,6 +35,7 @@ export class DrawToolsService {
         Triangle,
         Rectangle,
         Text,
+        Textbox,
         Arrow,
         Line,
         Icon,
@@ -55,13 +57,16 @@ export class DrawToolsService {
             case 'tool__text':
                 return drawText;
 
+            case 'tool__textbox':
+                return drawTextbox;
+
             case 'tool__line':
                 return drawLine;
 
             case 'tool__icon':
                 return drawIcon;
 
-            case 'tool__arrow':
+            case 'tool__polyline':
                 return drawArrow;
 
             case 'tool__image':
@@ -79,7 +84,7 @@ export class DrawToolsService {
         let additional = [];
         switch (id) {
             case 'tool__rect':
-                additional = RECTANGLE_PROPS;
+                additional = RECTANGLE_PROPS;                
                 break;
 
             case 'tool__triangle':
@@ -98,6 +103,10 @@ export class DrawToolsService {
                 additional = TEXT_PROPS;
                 break;
 
+            case 'tool__textbox':
+                additional = TEXTBOX_PROPS;
+                break;
+
             case 'tool__icon':
                 additional = ICON_PROPS;
                 break;
@@ -106,15 +115,25 @@ export class DrawToolsService {
                 additional = IMAGE_PROPS;
                 break;
 
-            case 'tool__group':
-                additional = [];
+            case 'tool__polyline':
+                additional = ARROW_PROPS;
+                break;
+
+            case 'tool__svg':
+                additional = SVG_PROPS;
                 break;
 
             default:
                 return;
         }
-
-        let props = [...additional, ...baseProperties];
-        return pick(object, props);
+        switch (id) {
+            case 'tool__svg':
+                additional = SVG_PROPS;
+                let myprops = [...additional];
+                return pick(object, myprops);
+            default:
+                let props = [...additional, ...baseProperties];
+                return pick(object, props);
+        }        
     }
 }

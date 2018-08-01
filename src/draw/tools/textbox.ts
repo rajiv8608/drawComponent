@@ -2,14 +2,14 @@ import * as _fabric from 'fabric';
 import { Tool, Color } from '../models';
 let fabric = (_fabric as any).fabric as typeof _fabric;
 
-const textDefaults: fabric.IITextOptions = {
+const textboxDefaults: fabric.IITextOptions = {
     fontFamily: 'Segoe UI',
     fontSize: 32,
     fill: new Color('#000000').hex,
     editable:true
 };
 
-export const TEXT_PROPS = [
+export const TEXTBOX_PROPS = [
     'fontSize',
     'fontWeight',
     'fontFamily',
@@ -19,19 +19,21 @@ export const TEXT_PROPS = [
     'lineHeight',
     'shadow',
     'textBackgroundColor',
-    'text'
+    'text',
+    'top',
+    'left'
 ];
 
-export const Text: Tool = {
-    id: 'tool__text',
+export const Textbox: Tool = {
+    id: 'tool__textbox',
     name: 'Draw Text',
     icon: 'InsertTextBox',
     placeholderName: 'Text'
 };
 
-export const drawText = (options?: fabric.ITextOptions): fabric.IText => {
-    return new fabric.IText('Text', {
-        ...textDefaults as any,
+export const drawTextbox = (options?: fabric.IITextboxOptions): fabric.Textbox => {
+    return new fabric.Textbox('Text', {
+        ...textboxDefaults as any,
         ...options
     });
 };

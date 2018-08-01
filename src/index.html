@@ -9,14 +9,82 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="node_modules/office-ui-fabric-core/dist/css/fabric.css" />
-    <link rel="stylesheet" href="node_modules/office-ui-fabric-js/dist/css/fabric.components.css" />
+    <link rel="stylesheet" href="https://unpkg.com/office-ui-fabric-core/dist/css/fabric.css" />
+    <link rel="stylesheet" href="https://unpkg.com/office-ui-fabric-js/dist/css/fabric.components.css" />
+     <link rel="stylesheet" href="https://unpkg.com/jquery-minicolors@2.1.10/jquery.minicolors.css" />
 </head>
 
 <body class="ms-font-m" ng-controller="AppController as app">
-    <draw></draw>
-    <script src="node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="node_modules/office-ui-fabric-js/dist/js/fabric.js"></script>
+    <div ng-if="!app.DrawStateService.current">
+    <button  ng-click="app.saveData()">
+            <i class="ms-Icon ms-Icon--Save"></i>
+        </button>
+        <button  ng-click="app.DrawStateService.open()">
+            <i class="ms-Icon ms-Icon--OpenFile"></i>
+        </button>
+        <button  ng-click="app.DrawStateService.clear()">
+            <i class="ms-Icon ms-Icon--Delete"></i>
+        </button>
+    </div>
+    <div ng-if="app.DrawStateService.current">
+        <button ng-click="app.update()">
+        <i class="ms-Icon ms-Icon--Save"></i>
+    </button>
+    <button ng-click="app.DrawStateService.remove()">
+        <i class="ms-Icon ms-Icon--Delete"></i>
+    </button>
+    </div>
+     
+    <section class="">
+        <artice class="draw__tool" style="padding:15px;float:left"
+            ng-repeat="tool in app.DrawToolsService.defaultTools track by $index"
+            ng-class="{'draw__tool--selected':tool.id===app.DrawToolsService.tool.id}"
+            ng-click="app.DrawStateService.draw(tool)"
+            id="{{tool.id}}" title="{{tool.placeholderName}}">
+
+            <i class="ms-Icon ms-Icon--{{tool.icon}}"></i>
+        </artice>
+    </section>
+    <draw id="myId"></draw>
+    <script src="https://unpkg.com/jquery/dist/jquery.min.js"></script>
+    <script src="https://unpkg.com/angular@1.6.5/angular.js"></script>
+    <script>
+        angular
+   .module('app', ['Draw','minicolors'])
+    .controller('AppController', ['$scope','DrawStateService','DrawToolsService',function ($scope, DrawStateService,DrawToolsService) {
+        var vm = this;
+        console.log('data');
+        vm.DrawStateService = DrawStateService;
+        vm.DrawToolsService = DrawToolsService;
+        
+        console.log(vm.DrawStateService);
+        console.log(vm.DrawToolsService.defaultTools);
+        // vm.DrawToolsService.defaultTools = _.without(vm.DrawToolsService.defaultTools, _.findWhere(vm.DrawToolsService.defaultTools, {
+        //     id: "tool__svg"
+        // }));
+        vm.update = function(){
+            vm.properties = vm.DrawStateService.getPropertiesCtrl();
+            if(vm.properties != null)
+            vm.DrawStateService.update(vm.properties);
+            vm.DrawStateService.current = false;
+        }
+        vm.draw = function(tool) {
+            if(tool.id === 'tool__svg') {
+                vm.DrawStateService.draw(tool, { id: "tool__wheel", height: 250, width: 250 });
+            }
+            else
+                vm.DrawStateService.draw(tool);
+        }
+        vm.saveData = function(){
+            vm.DrawStateService.save();
+        }
+        vm.DrawStateService.clear();
+}])
+    </script>
+    <script src="https://unpkg.com/jquery-minicolors@2.1.10/jquery.minicolors.js"></script>
+    <script src="https://unpkg.com/angular-minicolors@0.0.10/angular-minicolors.js"></script>    
+    <script src="https://unpkg.com/office-ui-fabric-js@1.3.0/dist/js/fabric.js"></script>
+    
 </body>
 
 </html>
